@@ -22,49 +22,55 @@ struct DonateView: View {
                 List(viewModel.donationCenters) { center in
                     VStack(alignment: .leading) {
                         Text(center.name).font(.headline)
+                        if let distance = center.distance {
+                               Text(String(format: "%.1f km", distance / 1000)) // Convert meters to kilometers
+                                   .padding(.top, 1)
+                           }
                         Text("Address: \(center.address)")
                         Text("Hours: \(center.operationalHours)")
                         Text("Accepts: \(center.acceptedDonationTypes)")
-                        
-                        // Buttons for directions and more info
-                        HStack {
-                            // Get Directions Button
-                            Button(action: {
-                                // Open directions in Maps
-                                let destination = MKMapItem(placemark: MKPlacemark(coordinate: center.coordinate))
-                                destination.name = center.name
-                                destination.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
-                            }) {
-                                Text("Get Directions")
-                                    .foregroundColor(.blue)
-                            }
-                            .padding(.top, 5)
+                        .padding(.bottom)
 
-                            Spacer()
-
-                            // Get More Info Button
+                        HStack(spacing: 20) {
                             Button(action: {
-                                // Open Google search for more info
-                                if let url = URL(string: "https://www.google.com/search?q=\(center.name.replacingOccurrences(of: " ", with: "+"))") {
-                                    UIApplication.shared.open(url)
-                                }
+                                openDirections(center: center)
                             }) {
-                                Text("Get More Info")
-                                    .foregroundColor(.blue)
+                                buttonContent(title: "Directions")
                             }
-                            .padding(.top, 5)
+
+                            Button(action: {
+                                openMoreInfo(center: center)
+                            }) {
+                                buttonContent(title: "More Info")
+                            }
                         }
                     }
                     .padding()
-                    .onTapGesture {
-                        self.selectedCenter = center
-                    }
+                    .buttonStyle(PlainButtonStyle()) // Prevents entire VStack from being clickable.
                 }
-                Spacer()
+                .listStyle(PlainListStyle()) // Removes list row selection style.
             }
-            .onAppear {
-                viewModel.fetchDonationCenters()
-            }
+        }
+    }
+
+    private func buttonContent(title: String) -> some View {
+        Text(title)
+            .foregroundColor(.white)
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .padding()
+            .background(Color.black)
+            .cornerRadius(10)
+    }
+
+    private func openDirections(center: DonationCenter) {
+        let destination = MKMapItem(placemark: MKPlacemark(coordinate: center.coordinate))
+        destination.name = center.name
+        destination.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+    }
+
+    private func openMoreInfo(center: DonationCenter) {
+        if let url = URL(string: "https://www.google.com/search?q=\(center.name.replacingOccurrences(of: " ", with: "+"))") {
+            UIApplication.shared.open(url)
         }
     }
 }
