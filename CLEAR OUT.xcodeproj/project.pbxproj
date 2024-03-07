@@ -73,6 +73,7 @@
 		61648BA32B9685D800A5B7AA /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA22B9685D800A5B7AA /* FirebaseRemoteConfigSwift */; };
 		61648BA52B9685D800A5B7AA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA42B9685D800A5B7AA /* FirebaseStorage */; };
 		61648BA72B9685D800A5B7AA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA62B9685D800A5B7AA /* FirebaseStorageCombine-Community */; };
+		619D0C242B97D2F100520A18 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619D0C232B97D2F100520A18 /* APIKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +137,7 @@
 		61648B6B2B96828000A5B7AA /* WishlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistManager.swift; sourceTree = "<group>"; };
 		61648B6D2B96829C00A5B7AA /* ItemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCard.swift; sourceTree = "<group>"; };
 		61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		619D0C232B97D2F100520A18 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +249,7 @@
 				61648B6B2B96828000A5B7AA /* WishlistManager.swift */,
 				61648B6D2B96829C00A5B7AA /* ItemCard.swift */,
 				614C56032B968C3800552E82 /* GooglePlacesAPIResponseModels.swift */,
+				619D0C232B97D2F100520A18 /* APIKeys.swift */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
 				61648B072B967AB300A5B7AA /* Preview Content */,
@@ -466,6 +469,7 @@
 				61648B682B96824600A5B7AA /* ItemCustomerView.swift in Sources */,
 				61648B522B967F1900A5B7AA /* ImageViewer.swift in Sources */,
 				61648B3A2B967D4300A5B7AA /* UserSession.swift in Sources */,
+				619D0C242B97D2F100520A18 /* APIKeys.swift in Sources */,
 				61648B582B967F7B00A5B7AA /* DonateViewModel.swift in Sources */,
 				61648B502B967EF100A5B7AA /* FirebaseStorageManager.swift in Sources */,
 				61648B5A2B967F9600A5B7AA /* DonationCenter.swift in Sources */,
