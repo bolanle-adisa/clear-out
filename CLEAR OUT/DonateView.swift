@@ -27,8 +27,8 @@ struct DonateView: View {
                                    .padding(.top, 1)
                            }
                         Text("Address: \(center.address)")
-                        Text("Hours: \(center.operationalHours)")
-                        Text("Accepts: \(center.acceptedDonationTypes)")
+//                        Text("Hours: \(center.operationalHours)")
+//                        Text("Accepts: \(center.acceptedDonationTypes)")
                         .padding(.bottom)
 
                         HStack(spacing: 20) {

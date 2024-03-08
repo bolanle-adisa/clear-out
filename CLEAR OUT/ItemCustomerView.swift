@@ -15,6 +15,8 @@ struct ItemCustomerView: View {
     @State private var showingAddToWishlistConfirmation = false
     @EnvironmentObject var cartManager: CartManager
     @State private var sellOrRentOption: CartManager.CartOption?
+    @EnvironmentObject var wishlistManager: WishlistManager
+
     
     
     var body: some View {
@@ -58,6 +60,14 @@ struct ItemCustomerView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
+        .alert(isPresented: $showingAddToWishlistConfirmation) {
+            Alert(
+                title: Text("Success"),
+                message: Text("\(item.name) has been added to your wishlist"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+
     }
     
     @ViewBuilder
@@ -148,6 +158,8 @@ struct ItemCustomerView: View {
                         
                         Button(action: {
                             // Placeholder action for adding to wishlist
+                            wishlistManager.addToWishlist(item: item)
+                            showingAddToWishlistConfirmation = true
                             print("Add \(item.name) to wishlist")
                         }) {
                             Image(systemName: "heart")
@@ -185,7 +197,8 @@ struct ItemCustomerView: View {
                     
                     // Add to Wishlist button, shown side by side when only one option is available
                     Button(action: {
-                        
+                        wishlistManager.addToWishlist(item: item)
+                        showingAddToWishlistConfirmation = true
                         print("Add \(item.name) to wishlist")
                     }) {
                         Image(systemName: "heart")
@@ -214,5 +227,6 @@ struct ItemCustomerView_Previews: PreviewProvider {
             userId: "user123"
         )
         ItemCustomerView(item: dummyItem).environmentObject(CartManager.shared)
+            .environmentObject(WishlistManager.shared)
     }
 }
