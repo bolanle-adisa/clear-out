@@ -11,6 +11,10 @@ import SwiftUI
 struct ItemCard: View {
     let item: ItemForSaleAndRent
     @EnvironmentObject var wishlistManager: WishlistManager
+    
+    var isInWishlist: Bool {
+        wishlistManager.wishlistItems.contains(where: { $0.id == item.id })
+    }
 
     var body: some View {
         VStack {
@@ -68,16 +72,16 @@ struct ItemCard: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
             
-//                .onAppear {
-//                    print("WishlistManager is accessible in ItemCard")
-//                }
-
             HStack {
                 Button(action: {
-                    print("Wishlist add button tapped for item: \(item.name)") // Debug message
-                    self.wishlistManager.addToWishlist(item: self.item)
+                    print("Wishlist add button tapped for item: \(item.name)")
+                    if isInWishlist {
+                        wishlistManager.removeFromWishlist(item: item)
+                    } else {
+                        wishlistManager.addToWishlist(item: item)
+                    }
                 }) {
-                    Image(systemName: "heart")
+                    Image(systemName: isInWishlist ? "heart.fill" : "heart")
                         .foregroundColor(.black)
                 }
                 .padding(.trailing, 100)

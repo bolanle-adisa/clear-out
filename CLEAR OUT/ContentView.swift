@@ -82,5 +82,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
             .environmentObject(UserSession())
             .environmentObject(CartManager.shared)
+            .environmentObject(WishlistManager.shared)
     }
 }

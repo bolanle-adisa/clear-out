@@ -19,6 +19,7 @@ struct BuyView: View {
     @StateObject private var itemsManager = ItemsForSaleManager()
     @EnvironmentObject var cartManager: CartManager
     @State private var showingWishlistView = false
+    @EnvironmentObject var wishlistManager: WishlistManager
 
     let options = ["Dorm Essentials", "Books", "Women's Clothes", "Men's Clothes", "Women's Shoes", "Men's Shoes", "Electronics"]
 
@@ -152,6 +153,7 @@ struct BuyView: View {
                 ForEach(displayItems) { item in
                     NavigationLink(destination: ItemCustomerView(item: item)) {
                         ItemCard(item: item)
+                            .environmentObject(wishlistManager)
                     }
                 }
             }
