@@ -10,10 +10,17 @@ import SwiftUI
 
 struct ItemCard: View {
     let item: ItemForSaleAndRent
+    @EnvironmentObject var cartManager: CartManager
     @EnvironmentObject var wishlistManager: WishlistManager
+    
+    @State private var showingOptions = false
     
     var isInWishlist: Bool {
         wishlistManager.wishlistItems.contains(where: { $0.id == item.id })
+    }
+    
+    var hasBothOptions: Bool {
+        (item.price ?? 0) > 0 && (item.rentPrice ?? 0) > 0
     }
 
     var body: some View {
@@ -87,10 +94,23 @@ struct ItemCard: View {
                 .padding(.trailing, 100)
 
                 Button(action: {
-                    // Add to cart action
+                    // Trigger the options only if both buy and rent options are available
+                    if hasBothOptions {
+                        showingOptions = true
+                    } else {
+                        // If only one option is available, directly add to cart
+                        if let price = item.price, price > 0 {
+                            cartManager.addToCart(item: item, option: .sell)
+                        } else if let rentPrice = item.rentPrice, rentPrice > 0 {
+                            cartManager.addToCart(item: item, option: .rent)
+                        }
+                    }
                 }) {
                     Image(systemName: "cart")
                         .foregroundColor(.black)
+                }
+                .actionSheet(isPresented: $showingOptions) {
+                    actionSheetOptions()
                 }
             }
         }
@@ -99,4 +119,27 @@ struct ItemCard: View {
         .cornerRadius(10)
         .shadow(radius: 2)
     }
+    
+    func actionSheetOptions() -> ActionSheet {
+            var buttons: [ActionSheet.Button] = []
+            
+            // Add Buy option if available
+            if let price = item.price, price > 0 {
+                buttons.append(.default(Text("Buy for $\(price, specifier: "%.2f")")) {
+                    cartManager.addToCart(item: item, option: .sell)
+                })
+            }
+            
+            // Add Rent option if available
+            if let rentPrice = item.rentPrice, rentPrice > 0 {
+                buttons.append(.default(Text("Rent for $\(rentPrice, specifier: "%.2f")")) {
+                    cartManager.addToCart(item: item, option: .rent)
+                })
+            }
+            
+            // Cancel button
+            buttons.append(.cancel())
+            
+            return ActionSheet(title: Text("Select Option"), message: nil, buttons: buttons)
+        }
 }
