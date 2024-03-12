@@ -57,25 +57,37 @@ struct BuyView: View {
 
     var titleAndWishListIcon: some View {
         HStack {
-            Text("CLEAROUT")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            Spacer()
-            
-            Button(action: {
-                print("Wishlist button tapped") // Debug message
-                showingWishlistView = true
-            }) {
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.black)
-                    .imageScale(.large)
-            }
-            .padding(.trailing, 15)
-
+                Text("CLEAROUT")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                Button(action: {
+                    print("Wishlist button tapped")
+                    showingWishlistView = true
+                }) {
+                    ZStack(alignment: .topTrailing) {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.black)
+                            .imageScale(.large)
+                        
+                        // Only show the count badge if there are items in the wishlist
+                        if wishlistManager.wishlistItems.count > 0 {
+                            Text("\(wishlistManager.wishlistItems.count)")
+                                .font(.caption2)
+                                .foregroundColor(.white)
+                                .padding(5)
+                                .background(Color.red)
+                                .clipShape(Circle())
+                                .offset(x: 12, y: -10)
+                        }
                     }
-                    .padding(.leading)
                 }
+                .padding(.trailing, 15)
+            }
+            .padding(.leading)
+        }
 
     var searchBar: some View {
         HStack {

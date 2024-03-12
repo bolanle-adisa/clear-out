@@ -18,6 +18,10 @@ struct ItemCustomerView: View {
     @EnvironmentObject var wishlistManager: WishlistManager
 
     
+    var isInWishlist: Bool {
+            wishlistManager.wishlistItems.contains(where: { $0.id == item.id })
+        }
+    
     
     var body: some View {
         ScrollView {
@@ -157,13 +161,15 @@ struct ItemCustomerView: View {
                         .cornerRadius(10)
                         
                         Button(action: {
-                            // Placeholder action for adding to wishlist
-                            wishlistManager.addToWishlist(item: item)
+                            if isInWishlist {
+                                wishlistManager.removeFromWishlist(item: item)
+                            } else {
+                                wishlistManager.addToWishlist(item: item)
+                            }
                             showingAddToWishlistConfirmation = true
-                            print("Add \(item.name) to wishlist")
                         }) {
-                            Image(systemName: "heart")
-                                .foregroundColor(.red)
+                            Image(systemName: isInWishlist ? "heart.fill" : "heart")
+                                .foregroundColor(.black)
                         }
                     }
                 }
@@ -197,12 +203,15 @@ struct ItemCustomerView: View {
                     
                     // Add to Wishlist button, shown side by side when only one option is available
                     Button(action: {
-                        wishlistManager.addToWishlist(item: item)
+                        if isInWishlist {
+                            wishlistManager.removeFromWishlist(item: item)
+                        } else {
+                            wishlistManager.addToWishlist(item: item)
+                        }
                         showingAddToWishlistConfirmation = true
-                        print("Add \(item.name) to wishlist")
                     }) {
-                        Image(systemName: "heart")
-                            .foregroundColor(.red)
+                        Image(systemName: isInWishlist ? "heart.fill" : "heart")
+                            .foregroundColor(.black)
                     }
                 }
             }
