@@ -3,13 +3,11 @@
 //  CLEAR OUT
 //
 //  Created by Bolanle Adisa on 3/4/24.
-//
 
 import SwiftUI
 
 struct WishlistView: View {
     @EnvironmentObject var wishlistManager: WishlistManager
-    @State private var selectedItem: ItemForSaleAndRent?
 
     var body: some View {
         NavigationView {
@@ -18,35 +16,50 @@ struct WishlistView: View {
                     .font(.headline)
                     .padding()
 
-                List(wishlistManager.wishlistItems) { item in
-                    VStack(alignment: .leading) {
-                        Text(item.name).font(.headline)
-                       
-                        Text("Price: $\(item.price ?? 0.0, specifier: "%.2f")")
-                       
-                    }
-                    .padding()
-                    .onTapGesture {
-                        self.selectedItem = item
+                if wishlistManager.wishlistItems.isEmpty {
+                    Text("Your wishlist is empty.\nStart exploring now!")
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color(UIColor.systemBackground))
+                } else {
+                    List {
+                        ForEach(wishlistManager.wishlistItems) { item in
+                            NavigationLink(destination: ItemCustomerView(item: item).environmentObject(wishlistManager)) {
+                                HStack {
+                                    AsyncImage(url: URL(string: item.mediaUrl)) { phase in
+                                        switch phase {
+                                        case .success(let image):
+                                            image.resizable().aspectRatio(contentMode: .fill).frame(width: 60, height: 60).cornerRadius(10)
+                                        case .failure(_), .empty:
+                                            Image(systemName: "photo").frame(width: 60, height: 60).background(Color.gray.opacity(0.1)).cornerRadius(10)
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
+                                    .padding(.trailing, 8)
+
+                                    VStack(alignment: .leading) {
+                                        Text(item.name).font(.headline)
+                                    }
+                                    Spacer()
+                                }
+                            }
+                        }
+                        .onDelete(perform: removeItems)
                     }
                 }
+
                 Spacer()
-            }
-            .sheet(item: $selectedItem) { item in
-                ItemDetailView(item: item)
             }
         }
     }
-}
 
-
-struct ItemDetailView: View {
-    var item: ItemForSaleAndRent
-
-    var body: some View {
-        VStack {
-            Text(item.name) // Display the item's name
-            // Add more item details here as needed
+    func removeItems(at offsets: IndexSet) {
+        offsets.forEach { index in
+            let item = wishlistManager.wishlistItems[index]
+            wishlistManager.removeFromWishlist(item: item)
         }
     }
 }

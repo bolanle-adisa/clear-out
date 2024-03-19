@@ -15,6 +15,12 @@ struct ItemCustomerView: View {
     @State private var showingAddToWishlistConfirmation = false
     @EnvironmentObject var cartManager: CartManager
     @State private var sellOrRentOption: CartManager.CartOption?
+    @EnvironmentObject var wishlistManager: WishlistManager
+
+    
+    var isInWishlist: Bool {
+            wishlistManager.wishlistItems.contains(where: { $0.id == item.id })
+        }
     
     
     var body: some View {
@@ -58,6 +64,14 @@ struct ItemCustomerView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
+        .alert(isPresented: $showingAddToWishlistConfirmation) {
+            Alert(
+                title: Text("Success"),
+                message: Text("\(item.name) has been added to your wishlist"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+
     }
     
     @ViewBuilder
@@ -147,11 +161,15 @@ struct ItemCustomerView: View {
                         .cornerRadius(10)
                         
                         Button(action: {
-                            // Placeholder action for adding to wishlist
-                            print("Add \(item.name) to wishlist")
+                            if isInWishlist {
+                                wishlistManager.removeFromWishlist(item: item)
+                            } else {
+                                wishlistManager.addToWishlist(item: item)
+                            }
+                            showingAddToWishlistConfirmation = true
                         }) {
-                            Image(systemName: "heart")
-                                .foregroundColor(.red)
+                            Image(systemName: isInWishlist ? "heart.fill" : "heart")
+                                .foregroundColor(.black)
                         }
                     }
                 }
@@ -185,11 +203,15 @@ struct ItemCustomerView: View {
                     
                     // Add to Wishlist button, shown side by side when only one option is available
                     Button(action: {
-                        
-                        print("Add \(item.name) to wishlist")
+                        if isInWishlist {
+                            wishlistManager.removeFromWishlist(item: item)
+                        } else {
+                            wishlistManager.addToWishlist(item: item)
+                        }
+                        showingAddToWishlistConfirmation = true
                     }) {
-                        Image(systemName: "heart")
-                            .foregroundColor(.red)
+                        Image(systemName: isInWishlist ? "heart.fill" : "heart")
+                            .foregroundColor(.black)
                     }
                 }
             }
@@ -214,5 +236,6 @@ struct ItemCustomerView_Previews: PreviewProvider {
             userId: "user123"
         )
         ItemCustomerView(item: dummyItem).environmentObject(CartManager.shared)
+            .environmentObject(WishlistManager.shared)
     }
 }

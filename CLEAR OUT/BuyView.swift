@@ -19,6 +19,7 @@ struct BuyView: View {
     @StateObject private var itemsManager = ItemsForSaleManager()
     @EnvironmentObject var cartManager: CartManager
     @State private var showingWishlistView = false
+    @EnvironmentObject var wishlistManager: WishlistManager
 
     let options = ["Dorm Essentials", "Books", "Women's Clothes", "Men's Clothes", "Women's Shoes", "Men's Shoes", "Electronics"]
 
@@ -56,25 +57,37 @@ struct BuyView: View {
 
     var titleAndWishListIcon: some View {
         HStack {
-            Text("CLEAROUT")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            Spacer()
-            
-            Button(action: {
-                print("Wishlist button tapped") // Debug message
-                showingWishlistView = true
-            }) {
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.black)
-                    .imageScale(.large)
-            }
-            .padding(.trailing, 15)
-
+                Text("CLEAROUT")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                Button(action: {
+                    print("Wishlist button tapped")
+                    showingWishlistView = true
+                }) {
+                    ZStack(alignment: .topTrailing) {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.black)
+                            .imageScale(.large)
+                        
+                        // Only show the count badge if there are items in the wishlist
+                        if wishlistManager.wishlistItems.count > 0 {
+                            Text("\(wishlistManager.wishlistItems.count)")
+                                .font(.caption2)
+                                .foregroundColor(.white)
+                                .padding(5)
+                                .background(Color.red)
+                                .clipShape(Circle())
+                                .offset(x: 12, y: -10)
+                        }
                     }
-                    .padding(.leading)
                 }
+                .padding(.trailing, 15)
+            }
+            .padding(.leading)
+        }
 
     var searchBar: some View {
         HStack {
@@ -152,6 +165,7 @@ struct BuyView: View {
                 ForEach(displayItems) { item in
                     NavigationLink(destination: ItemCustomerView(item: item)) {
                         ItemCard(item: item)
+                            .environmentObject(wishlistManager)
                     }
                 }
             }

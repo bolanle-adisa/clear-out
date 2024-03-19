@@ -29,4 +29,14 @@ class WishlistManager: ObservableObject {
         print("Item successfully added to wishlist: \(item.name)")
         print("Completed addToWishlist method for item: \(item.name)")
     }
+    
+    func removeFromWishlist(item: ItemForSaleAndRent) {
+        DispatchQueue.main.async {
+            if let index = self.wishlistItems.firstIndex(where: { $0.id == item.id }) {
+                self.wishlistItems.remove(at: index)
+                print("Item removed from wishlist: \(item.name)")
+            }
+        }
+    }
+
 }
