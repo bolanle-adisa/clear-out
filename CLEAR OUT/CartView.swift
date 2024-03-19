@@ -80,14 +80,19 @@ struct CartView: View {
                     }
                     .padding()
 
-                    Button("Checkout") {
+                    Button(action: {
                         backendModel.preparePaymentSheet(subtotal: subtotal)
+                    }) {
+                        Spacer()
+                        Text("Checkout")
+                            .foregroundColor(.white)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding()
+                        Spacer()
                     }
-                    .foregroundColor(.white)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
                     .background(Color.black)
                     .cornerRadius(10)
+                    .contentShape(Rectangle())
                     .padding(.horizontal)
                     .sheet(isPresented: $backendModel.showPaymentSheet) {
                         if let paymentSheet = backendModel.paymentSheet {
