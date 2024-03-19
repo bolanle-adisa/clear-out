@@ -1,0 +1,5 @@
+{
+  "stripe": {
+    "secret": "sk_test_51OtjS8FiX8jofvyhVOt7GuA59SUMktQI5mCwm13JTVq5u3xFVQeRXqlWG97hoJEPmtOvsNxgO0zBdO1dwRcfRtZp00uCskLQvP"
+  }
+}

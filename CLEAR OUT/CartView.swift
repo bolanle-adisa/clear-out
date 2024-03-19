@@ -6,9 +6,16 @@
 //
 
 import SwiftUI
+import Stripe
+import StripePaymentSheet
 
 struct CartView: View {
     @EnvironmentObject var cartManager: CartManager
+    @State private var paymentSheet: PaymentSheet?
+    @State private var showPaymentSheet = false
+    @StateObject var backendModel = MyBackendModel()
+
+
 
     var body: some View {
         NavigationView {
@@ -74,7 +81,7 @@ struct CartView: View {
                     .padding()
 
                     Button("Checkout") {
-                        print("Proceed to checkout")
+                        backendModel.preparePaymentSheet(subtotal: subtotal)
                     }
                     .foregroundColor(.white)
                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -82,6 +89,27 @@ struct CartView: View {
                     .background(Color.black)
                     .cornerRadius(10)
                     .padding(.horizontal)
+                    .sheet(isPresented: $backendModel.showPaymentSheet) {
+                        if let paymentSheet = backendModel.paymentSheet {
+                            PaymentSheet.PaymentButton(
+                                paymentSheet: paymentSheet,
+                                onCompletion: { result in
+                                    // Handle the payment result
+                                    switch result {
+                                    case .completed:
+                                        print("Payment completed")
+                                    case .failed(let error):
+                                        print("Payment failed: \(error)")
+                                    case .canceled:
+                                        print("Payment canceled")
+                                    }
+                                }
+                            ) {
+                                // Add your custom label for the PaymentSheet button
+                                Text("Pay Now")
+                            }
+                        }
+                    }
                 }
                 .background(Color(UIColor.systemBackground))
             }
