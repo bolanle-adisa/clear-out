@@ -14,6 +14,7 @@ struct CartView: View {
     @State private var paymentSheet: PaymentSheet?
     @State private var showPaymentSheet = false
     @StateObject var backendModel = MyBackendModel()
+    @State private var showCheckoutView = false
 
 
 
@@ -80,38 +81,24 @@ struct CartView: View {
                     }
                     .padding()
 
-                    Button("Checkout") {
-                        backendModel.preparePaymentSheet(subtotal: subtotal)
+                    Button(action: {
+                        showCheckoutView = true  // Present the CheckoutView
+                    }) {
+                        Text("Checkout")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .contentShape(Rectangle())
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                    .foregroundColor(.white)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .background(Color.black)
-                    .cornerRadius(10)
                     .padding(.horizontal)
-                    .sheet(isPresented: $backendModel.showPaymentSheet) {
-                        if let paymentSheet = backendModel.paymentSheet {
-                            PaymentSheet.PaymentButton(
-                                paymentSheet: paymentSheet,
-                                onCompletion: { result in
-                                    // Handle the payment result
-                                    switch result {
-                                    case .completed:
-                                        print("Payment completed")
-                                    case .failed(let error):
-                                        print("Payment failed: \(error)")
-                                    case .canceled:
-                                        print("Payment canceled")
-                                    }
-                                }
-                            ) {
-                                // Add your custom label for the PaymentSheet button
-                                Text("Pay Now")
-                            }
-                        }
-                    }
+
                 }
                 .background(Color(UIColor.systemBackground))
+                .sheet(isPresented: $showCheckoutView) {
+                    CheckoutView(backendModel: backendModel).environmentObject(cartManager)
+                }
             }
         }
     }
