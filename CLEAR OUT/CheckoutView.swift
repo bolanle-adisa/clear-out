@@ -22,6 +22,9 @@ struct CheckoutView: View {
     @State private var showPaymentPresenter = false
     @State private var autocompleteSuggestions: [String] = []
     @State private var selectedPlaceId: String?
+    @State private var paymentResult: PaymentSheetResult?
+    @State private var showPaymentConfirmation = false
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         ScrollView {
@@ -75,17 +78,6 @@ struct CheckoutView: View {
 
                 CustomTextField(placeholder: "Address Line 2 (Optional)", text: $addressLine2)
                     .keyboardType(.default)
-
-//                CustomTextField(placeholder: "City", text: $city)
-//                    .keyboardType(.default)
-//
-//                CustomTextField(placeholder: "State/Province", text: $state)
-//                    .keyboardType(.default)
-//
-//                CustomTextField(placeholder: "ZIP/Postal Code", text: $zipCode, keyboardType: .numberPad)
-//
-//                CustomTextField(placeholder: "Country", text: $country)
-//                    .keyboardType(.default)
             }
 
             Button("Proceed to Payment") {
@@ -104,12 +96,19 @@ struct CheckoutView: View {
         .navigationTitle("Checkout")
         .sheet(isPresented: $showPaymentPresenter) {
             if let paymentSheet = backendModel.paymentSheet {
-                PaymentSheetPresenter(paymentSheet: paymentSheet) {
-                    // This closure is called after the payment sheet is dismissed
+                PaymentSheetPresenter(paymentSheet: paymentSheet) { result in
+                    handlePaymentResult(result)
                     showPaymentPresenter = false
                     backendModel.showPaymentSheet = false
                 }
             }
+        }
+        .sheet(isPresented: $showPaymentConfirmation) {
+            // Pass a closure to handle what happens when "Continue Shopping" is tapped
+            PaymentConfirmationView {
+                presentationMode.wrappedValue.dismiss() // Dismiss the checkout view
+            }
+            .environmentObject(cartManager)
         }
     }
 
@@ -129,6 +128,22 @@ struct CheckoutView: View {
                     self.country = details.country ?? ""
                 }
             }
+        }
+    }
+    
+    func handlePaymentResult(_ result: PaymentSheetResult) {
+        switch result {
+        case .completed:
+            // Payment successful, present the confirmation page modally
+            print("Payment completed")
+            showPaymentConfirmation = true
+        case .canceled:
+            // Payment canceled by the user
+            print("Payment canceled")
+        case .failed(let error):
+            // Payment failed, show an error message
+            print("Payment failed: \(error.localizedDescription)")
+            // Show an error message or prompt to try a different payment method
         }
     }
 }
