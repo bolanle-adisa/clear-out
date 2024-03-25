@@ -46,6 +46,11 @@ class CartManager: ObservableObject {
             print("Item to remove not found in cart. Item ID: \(itemID)")
         }
     }
+    
+    func clearCart() {
+        cartItems.removeAll() // Clears all items from the cart
+    }
+
 
     // Include any other existing methods or logic you have in this class
 }
