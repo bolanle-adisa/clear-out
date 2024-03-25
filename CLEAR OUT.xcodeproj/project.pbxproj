@@ -19,6 +19,9 @@
 		610F82152BA95CB600381FF0 /* MyBackendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610F82142BA95CB600381FF0 /* MyBackendModel.swift */; };
 		610F821F2BAA23E700381FF0 /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610F821E2BAA23E700381FF0 /* CheckoutView.swift */; };
 		610F82232BB0D40900381FF0 /* PaymentSheetPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610F82222BB0D40800381FF0 /* PaymentSheetPresenter.swift */; };
+		610F82272BB0E27500381FF0 /* AddressValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610F82262BB0E27500381FF0 /* AddressValidationService.swift */; };
+		610F82292BB0EC9E00381FF0 /* AddressAutocompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610F82282BB0EC9E00381FF0 /* AddressAutocompleteViewModel.swift */; };
+		610F822D2BB0F30200381FF0 /* PlaceDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610F822C2BB0F30200381FF0 /* PlaceDetailsResponse.swift */; };
 		614C56042B968C3800552E82 /* GooglePlacesAPIResponseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614C56032B968C3800552E82 /* GooglePlacesAPIResponseModels.swift */; };
 		61648B022B967AB100A5B7AA /* CLEAR_OUTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61648B012B967AB100A5B7AA /* CLEAR_OUTApp.swift */; };
 		61648B042B967AB100A5B7AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61648B032B967AB100A5B7AA /* ContentView.swift */; };
@@ -110,6 +113,9 @@
 		610F82142BA95CB600381FF0 /* MyBackendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBackendModel.swift; sourceTree = "<group>"; };
 		610F821E2BAA23E700381FF0 /* CheckoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
 		610F82222BB0D40800381FF0 /* PaymentSheetPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSheetPresenter.swift; sourceTree = "<group>"; };
+		610F82262BB0E27500381FF0 /* AddressValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressValidationService.swift; sourceTree = "<group>"; };
+		610F82282BB0EC9E00381FF0 /* AddressAutocompleteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAutocompleteViewModel.swift; sourceTree = "<group>"; };
+		610F822C2BB0F30200381FF0 /* PlaceDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsResponse.swift; sourceTree = "<group>"; };
 		614C56032B968C3800552E82 /* GooglePlacesAPIResponseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesAPIResponseModels.swift; sourceTree = "<group>"; };
 		614C56052B968CD700552E82 /* CLEAR-OUT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CLEAR-OUT-Info.plist"; sourceTree = SOURCE_ROOT; };
 		61648AFE2B967AB100A5B7AA /* CLEAR OUT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CLEAR OUT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,6 +284,9 @@
 				610F82142BA95CB600381FF0 /* MyBackendModel.swift */,
 				610F821E2BAA23E700381FF0 /* CheckoutView.swift */,
 				610F82222BB0D40800381FF0 /* PaymentSheetPresenter.swift */,
+				610F82262BB0E27500381FF0 /* AddressValidationService.swift */,
+				610F82282BB0EC9E00381FF0 /* AddressAutocompleteViewModel.swift */,
+				610F822C2BB0F30200381FF0 /* PlaceDetailsResponse.swift */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
 				61648B072B967AB300A5B7AA /* Preview Content */,
@@ -482,6 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				610F82272BB0E27500381FF0 /* AddressValidationService.swift in Sources */,
 				61648B642B96820C00A5B7AA /* ItemRow.swift in Sources */,
 				61648B5C2B96817000A5B7AA /* ItemDetailsView.swift in Sources */,
 				61648B4A2B967E9C00A5B7AA /* AddItemView.swift in Sources */,
@@ -492,6 +502,7 @@
 				61648B4E2B967ED300A5B7AA /* ItemForRentAndSale.swift in Sources */,
 				61648B442B967E2200A5B7AA /* UserProfileTwoView.swift in Sources */,
 				61648B342B967BF900A5B7AA /* UserProfileView.swift in Sources */,
+				610F822D2BB0F30200381FF0 /* PlaceDetailsResponse.swift in Sources */,
 				61648B662B96822B00A5B7AA /* ItemsForSaleManager.swift in Sources */,
 				61648B042B967AB100A5B7AA /* ContentView.swift in Sources */,
 				61648B302B967BA200A5B7AA /* SellView.swift in Sources */,
@@ -518,6 +529,7 @@
 				61648B6A2B96826400A5B7AA /* CartManager.swift in Sources */,
 				61648B3E2B967D7B00A5B7AA /* SignInView.swift in Sources */,
 				61648B362B967C1700A5B7AA /* WishlistView.swift in Sources */,
+				610F82292BB0EC9E00381FF0 /* AddressAutocompleteViewModel.swift in Sources */,
 				61648B402B967D9600A5B7AA /* College.swift in Sources */,
 				61648B562B967F6600A5B7AA /* VideoPlayerView.swift in Sources */,
 			);

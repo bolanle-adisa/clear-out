@@ -7,60 +7,132 @@
 import SwiftUI
 import Stripe
 import StripePaymentSheet
+
 struct CheckoutView: View {
     @EnvironmentObject var cartManager: CartManager
     @StateObject var backendModel: MyBackendModel
-    // State variables to store user input
     @State private var name: String = ""
-    @State private var address: String = ""
+    @State private var addressLine1: String = ""
+    @State private var addressLine2: String = ""
     @State private var city: String = ""
     @State private var state: String = ""
     @State private var zipCode: String = ""
     @State private var country: String = ""
+    @State private var phoneNumber: String = ""
     @State private var showPaymentPresenter = false
-    
+    @State private var autocompleteSuggestions: [String] = []
+    @State private var selectedPlaceId: String?
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Group {
-                    Text("Shipping Information").font(.title2).bold()
-                    CustomTextField(placeholder: "Name", text: $name)
-                    CustomTextField(placeholder: "Address", text: $address)
-                    CustomTextField(placeholder: "City", text: $city)
-                    CustomTextField(placeholder: "State/Province", text: $state)
-                    CustomTextField(placeholder: "ZIP/Postal Code", text: $zipCode)
-                    CustomTextField(placeholder: "Country", text: $country)
-                }
-                Button("Proceed to Payment") {
-                    if validateShippingInformation() {
-                        let subtotal = cartManager.cartItems.reduce(0) { $0 + $1.price }
-                        backendModel.preparePaymentSheet(subtotal: subtotal) // Make sure this method updates the `paymentSheet` property and sets a flag to show the sheet
-                        showPaymentPresenter = true
-                    } else {
-                        // Handle validation failure
+                Text("Shipping Information")
+                    .font(.title2)
+                    .bold()
+
+                CustomTextField(placeholder: "Full Name", text: $name)
+                    .keyboardType(.default)
+
+                CustomTextField(placeholder: "Phone Number", text: $phoneNumber, keyboardType: .phonePad)
+
+                CustomAutocompleteTextField(
+                    placeholder: "Address Line 1",
+                    text: $addressLine1,
+                    suggestions: $autocompleteSuggestions,
+                    selectedPlaceId: $selectedPlaceId,
+                    onCommit: {
+                        if let placeId = selectedPlaceId {
+                                AddressValidationService.shared.getPlaceDetails(placeId: placeId) { placeDetails in
+                                    if let details = placeDetails {
+                                        addressLine1 = details.streetAddress
+                                        addressLine2 = details.subpremise
+                                        city = details.city
+                                        state = details.state
+                                        zipCode = details.zipCode
+                                        country = details.country
+                                    
+                                    // Validate the address
+                                    AddressValidationService.shared.validateAddress(placeId: placeId) { isValid in
+                                        if isValid {
+                                            // Address is valid, proceed
+                                            print("Address is valid")
+                                        } else {
+                                            // Address is invalid, show an error message
+                                            print("Address is invalid")
+                                            // You can show an alert or display an error message here
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                )
+                .onChange(of: addressLine1) { newValue in
+                    AddressValidationService.shared.fetchAutocompleteSuggestions(input: newValue) { suggestions in
+                        autocompleteSuggestions = suggestions
                     }
                 }
-                .buttonStyle(PrimaryButtonStyle())
+
+                CustomTextField(placeholder: "Address Line 2 (Optional)", text: $addressLine2)
+                    .keyboardType(.default)
+
+//                CustomTextField(placeholder: "City", text: $city)
+//                    .keyboardType(.default)
+//
+//                CustomTextField(placeholder: "State/Province", text: $state)
+//                    .keyboardType(.default)
+//
+//                CustomTextField(placeholder: "ZIP/Postal Code", text: $zipCode, keyboardType: .numberPad)
+//
+//                CustomTextField(placeholder: "Country", text: $country)
+//                    .keyboardType(.default)
             }
-            .padding()
+
+            Button("Proceed to Payment") {
+                if validateShippingInformation() {
+                    let subtotal = cartManager.cartItems.reduce(0) { $0 + $1.price }
+                    backendModel.preparePaymentSheet(subtotal: subtotal)
+                    showPaymentPresenter = true
+                } else {
+                    // Handle validation failure
+                }
+            }
+            .buttonStyle(PrimaryButtonStyle())
+            .padding(.top, 20)
         }
+        .padding()
         .navigationTitle("Checkout")
         .sheet(isPresented: $showPaymentPresenter) {
             if let paymentSheet = backendModel.paymentSheet {
                 PaymentSheetPresenter(paymentSheet: paymentSheet) {
                     // This closure is called after the payment sheet is dismissed
                     showPaymentPresenter = false
-                    backendModel.showPaymentSheet = false // Reset the state if necessary
+                    backendModel.showPaymentSheet = false
                 }
             }
         }
     }
-    
+
     func validateShippingInformation() -> Bool {
-        // Implement actual validation logic here
-        return !(name.isEmpty || address.isEmpty || city.isEmpty || state.isEmpty || zipCode.isEmpty || country.isEmpty)
+        !(name.isEmpty || phoneNumber.isEmpty || addressLine1.isEmpty)
+    }
+    
+    func parentMethodToHandleSelection(placeId: String?) {
+        guard let placeId = placeId else { return }
+        AddressValidationService.shared.getPlaceDetails(placeId: placeId) { placeDetails in
+            if let details = placeDetails {
+                DispatchQueue.main.async {
+                    self.addressLine1 = "\(details.streetAddress ?? ""), \(details.subpremise ?? "")"
+                    self.city = details.city ?? ""
+                    self.state = details.state ?? ""
+                    self.zipCode = details.zipCode ?? ""
+                    self.country = details.country ?? ""
+                }
+            }
+        }
     }
 }
+
 // Reusable button style
 struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
@@ -73,18 +145,79 @@ struct PrimaryButtonStyle: ButtonStyle {
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }
+
 // Reusable custom text field
 struct CustomTextField: View {
     var placeholder: String
     @Binding var text: String
+    var keyboardType: UIKeyboardType = .default // Default keyboard type
+
     var body: some View {
         TextField(placeholder, text: $text)
-            .padding(12)
-            .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray, lineWidth: 1))
-            .background(Color(.systemBackground))
+            .padding(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 10)) // Increased padding
+            .keyboardType(keyboardType)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8) // More rounded corners
+                    .stroke(Color.gray.opacity(0.5), lineWidth: 2) // Thicker and lighter border
+            )
+            .background(Color.white) // Consider changing if you have a different theme
             .foregroundColor(.black)
     }
 }
+
+struct CustomAutocompleteTextField: View {
+    var placeholder: String
+    @Binding var text: String
+    @Binding var suggestions: [String]
+    @Binding var selectedPlaceId: String?
+    var onCommit: () -> Void = {}
+    var onSuggestionTapped: ((String) -> Void)?
+    
+    var body: some View {
+        VStack {
+            TextField(placeholder, text: $text, onCommit: onCommit)
+                .padding(12)
+                .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray, lineWidth: 1))
+                .background(Color(.systemBackground))
+                .foregroundColor(.black)
+                .autocapitalization(.none)
+            
+            ZStack {
+                if !suggestions.isEmpty {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 8) {
+                            ForEach(suggestions, id: \.self) { suggestion in
+                                Text(suggestion)
+                                    .padding(8)
+                                    .background(Color(.systemGray6))
+                                    .cornerRadius(8)
+                                    .onTapGesture {
+                                        self.text = suggestion
+                                        self.selectedPlaceId = extractPlaceId(from: suggestion)
+                                        self.suggestions = [] // Clears the autocomplete suggestions
+                                        if let placeId = self.selectedPlaceId {
+                                            self.onSuggestionTapped?(placeId) // Call the closure with the placeId
+                                        }
+                                    }
+                            }
+                        }
+                        .padding(.horizontal, 12)
+                    }
+                    .frame(height: suggestions.isEmpty ? 0 : 150) // Hide if empty
+                }
+            }
+        }
+    }
+    
+    private func extractPlaceId(from suggestion: String) -> String? {
+        let components = suggestion.components(separatedBy: ",")
+        if let lastComponent = components.last {
+            return lastComponent.trimmingCharacters(in: .whitespaces)
+        }
+        return nil
+    }
+}
+
 struct CheckoutView_Previews: PreviewProvider {
     static var previews: some View {
         CheckoutView(backendModel: MyBackendModel()).environmentObject(CartManager.shared)
