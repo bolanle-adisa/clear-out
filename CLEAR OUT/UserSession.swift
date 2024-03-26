@@ -15,6 +15,8 @@ class UserSession: ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var isAuthenticated = false
     @Published var firstName: String = ""
+    @Published var university: String = ""
+
 
     // Add more properties and methods as needed
     
