@@ -116,6 +116,8 @@ struct UserProfileTwoView: View {
                         read: data["read"] as? Bool ?? false
                     )
                 }
+                // Update the userSession.notifications property
+                self.userSession.notifications = self.notifications
             } else {
                 print("Error fetching notifications: \(error?.localizedDescription ?? "unknown error")")
             }
@@ -140,20 +142,19 @@ struct UserProfileTwoView: View {
         let db = Firestore.firestore()
 
         // Update the 'read' field of all notifications to true
-        for notification in notifications {
+        for index in notifications.indices {
+            let notification = notifications[index]
             db.collection("users").document(userId).collection("notifications").document(notification.id).updateData(["read": true]) { error in
                 if let error = error {
                     print("Error marking notification as read: \(error.localizedDescription)")
+                } else {
+                    // Update the local notification array
+                    self.notifications[index].read = true
                 }
             }
         }
 
-        // Update the local notification array and recalculate the unread count
-        notifications = notifications.map { notification in
-            var updatedNotification = notification
-            updatedNotification.read = true
-            return updatedNotification
-        }
+        // Recalculate the unread count
         calculateUnreadNotifications()
     }
     

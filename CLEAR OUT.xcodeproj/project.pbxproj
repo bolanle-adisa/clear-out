@@ -93,6 +93,7 @@
 		61FEE6DA2BB2CF1E0036A93D /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */; };
 		61FEE6DC2BB2D4330036A93D /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */; };
 		61FEE6DE2BB2E5F30036A93D /* BadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DD2BB2E5F30036A93D /* BadgeModifier.swift */; };
+		61FEE6E02BB2F93B0036A93D /* AddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,7 @@
 		61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
 		61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		61FEE6DD2BB2E5F30036A93D /* BadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModifier.swift; sourceTree = "<group>"; };
+		61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,7 +291,6 @@
 				614C56032B968C3800552E82 /* GooglePlacesAPIResponseModels.swift */,
 				619D0C232B97D2F100520A18 /* APIKeys.swift */,
 				610F82122BA94D0800381FF0 /* PaymentGateway.swift */,
-				610F82142BA95CB600381FF0 /* MyBackendModel.swift */,
 				610F821E2BAA23E700381FF0 /* CheckoutView.swift */,
 				610F82222BB0D40800381FF0 /* PaymentSheetPresenter.swift */,
 				610F82262BB0E27500381FF0 /* AddressValidationService.swift */,
@@ -299,7 +300,9 @@
 				61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */,
 				61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */,
 				61FEE6DD2BB2E5F30036A93D /* BadgeModifier.swift */,
+				61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
+				610F82142BA95CB600381FF0 /* MyBackendModel.swift */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
 				61648B072B967AB300A5B7AA /* Preview Content */,
 			);
@@ -504,6 +507,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				610F82272BB0E27500381FF0 /* AddressValidationService.swift in Sources */,
+				61FEE6E02BB2F93B0036A93D /* AddressesView.swift in Sources */,
 				61648B642B96820C00A5B7AA /* ItemRow.swift in Sources */,
 				61648B5C2B96817000A5B7AA /* ItemDetailsView.swift in Sources */,
 				61FEE6DC2BB2D4330036A93D /* NotificationsView.swift in Sources */,
