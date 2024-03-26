@@ -12,11 +12,18 @@ struct ItemCard: View {
     let item: ItemForSaleAndRent
     @EnvironmentObject var cartManager: CartManager
     @EnvironmentObject var wishlistManager: WishlistManager
+    @EnvironmentObject var userSession: UserSession
+    @State private var showLoginAlert = false
+    @State private var showLoginAlert2 = false
     
     @State private var showingOptions = false
     
     var isInWishlist: Bool {
         wishlistManager.wishlistItems.contains(where: { $0.id == item.id })
+    }
+    
+    var isInCart: Bool {
+        cartManager.cartItems.contains(where: { $0.item.id == item.id })
     }
     
     var hasBothOptions: Bool {
@@ -82,35 +89,59 @@ struct ItemCard: View {
             HStack {
                 Button(action: {
                     print("Wishlist add button tapped for item: \(item.name)")
-                    if isInWishlist {
-                        wishlistManager.removeFromWishlist(item: item)
+                    if userSession.isAuthenticated {
+                        if isInWishlist {
+                            wishlistManager.removeFromWishlist(item: item)
+                        } else {
+                            wishlistManager.addToWishlist(item: item)
+                        }
                     } else {
-                        wishlistManager.addToWishlist(item: item)
+                        // Show an alert to prompt the user to login
+                        showLoginAlert = true
                     }
                 }) {
                     Image(systemName: isInWishlist ? "heart.fill" : "heart")
                         .foregroundColor(.black)
                 }
                 .padding(.trailing, 100)
+                .alert(isPresented: $showLoginAlert) {
+                    Alert(
+                        title: Text("Login Required"),
+                        message: Text("Please login to add items to your wishlist."),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
 
                 Button(action: {
-                    // Trigger the options only if both buy and rent options are available
-                    if hasBothOptions {
-                        showingOptions = true
-                    } else {
-                        // If only one option is available, directly add to cart
-                        if let price = item.price, price > 0 {
-                            cartManager.addToCart(item: item, option: .sell)
-                        } else if let rentPrice = item.rentPrice, rentPrice > 0 {
-                            cartManager.addToCart(item: item, option: .rent)
+                    if userSession.isAuthenticated {
+                        // Trigger the options only if both buy and rent options are available
+                        if hasBothOptions {
+                            showingOptions = true
+                        } else {
+                            // If only one option is available, directly add to cart
+                            if let price = item.price, price > 0 {
+                                cartManager.addToCart(item: item, option: .sell)
+                            } else if let rentPrice = item.rentPrice, rentPrice > 0 {
+                                cartManager.addToCart(item: item, option: .rent)
+                            }
                         }
+                    } else {
+                        // Show an alert to prompt the user to login
+                        showLoginAlert2 = true
                     }
                 }) {
-                    Image(systemName: "cart")
+                    Image(systemName: isInCart ? "cart.fill" : "cart")
                         .foregroundColor(.black)
                 }
                 .actionSheet(isPresented: $showingOptions) {
                     actionSheetOptions()
+                }
+                .alert(isPresented: $showLoginAlert2) {
+                    Alert(
+                        title: Text("Login Required"),
+                        message: Text("Please login to add items to your cart."),
+                        dismissButton: .default(Text("OK"))
+                    )
                 }
             }
         }
