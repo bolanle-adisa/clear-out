@@ -21,7 +21,6 @@ struct AddressesView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(Color(UIColor.systemBackground))
                         .cornerRadius(10)
-                        .shadow(color: Color.gray.opacity(0.3), radius: 5, x: 0, y: 2)
                 }
             }
             .padding(.top)
@@ -93,8 +92,13 @@ struct AddressCardView: View {
             }
         }
         .padding()
+        .background(Color.white) // Changed background color to match NotificationCardView
+        .cornerRadius(10)
+        .shadow(radius: 5) // Adjusted shadow to match NotificationCardView
+        .padding(.vertical, 5) // Added vertical padding to each card
     }
 }
+
 
 
 // Ensure you have a UserAddress struct that matches your data structure
