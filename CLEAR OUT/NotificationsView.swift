@@ -10,21 +10,25 @@ import SwiftUI
 import SwiftUI
 
 struct NotificationsView: View {
-    var notifications: [UserNotification]
+    @Binding var notifications: [UserNotification]
+    var markNotificationsAsRead: () -> Void
 
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 10) {
-                ForEach(notifications) { notification in
-                    NotificationCardView(notification: notification)
-                        .padding(.horizontal)
-                }
-            }
-        }
-        .padding(.vertical)
-        .navigationTitle("Notifications")
-    }
-}
+           ScrollView {
+               LazyVStack(spacing: 10) {
+                   ForEach(notifications) { notification in
+                       NotificationCardView(notification: notification)
+                           .padding(.horizontal)
+                   }
+               }
+           }
+           .padding(.vertical)
+           .navigationTitle("Notifications")
+           .onAppear {
+               markNotificationsAsRead()
+           }
+       }
+   }
 
 struct NotificationCardView: View {
     var notification: UserNotification
@@ -72,7 +76,13 @@ struct NotificationsView_Previews: PreviewProvider {
             UserNotification(id: "3", title: "Payment Received", message: "We've received your payment.", timestamp: Date().addingTimeInterval(-172800), read: false) // 2 days ago
         ]
         
-        // Return the NotificationsView with the sample data
-        NotificationsView(notifications: sampleNotifications)
+        // Create a State object to hold the sample notifications
+        let notificationsState = State(initialValue: sampleNotifications)
+        
+        // Return the NotificationsView with the sample data and a dummy closure for markNotificationsAsRead
+        return NotificationsView(notifications: notificationsState.projectedValue) {
+            // Dummy closure for markNotificationsAsRead
+            print("Marking notifications as read in preview")
+        }
     }
 }

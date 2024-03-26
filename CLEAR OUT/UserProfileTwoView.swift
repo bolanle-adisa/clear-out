@@ -50,7 +50,7 @@ struct UserProfileTwoView: View {
                 
                 List {
                     SettingRowTwo(icon: "message", title: "Messages")
-                    NavigationLink(destination: NotificationsView(notifications: self.notifications)) {
+                    NavigationLink(destination: NotificationsView(notifications: $notifications, markNotificationsAsRead: markNotificationsAsRead)) {
                         SettingRowTwo(icon: "bell", title: "Notifications", notificationCount: unreadNotificationCount)
                     }
                     SettingRowTwo(icon: "map", title: "Addresses")
@@ -133,6 +133,28 @@ struct UserProfileTwoView: View {
     
     private func calculateUnreadNotifications() {
         unreadNotificationCount = notifications.filter { !$0.read }.count
+    }
+    
+    private func markNotificationsAsRead() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let db = Firestore.firestore()
+
+        // Update the 'read' field of all notifications to true
+        for notification in notifications {
+            db.collection("users").document(userId).collection("notifications").document(notification.id).updateData(["read": true]) { error in
+                if let error = error {
+                    print("Error marking notification as read: \(error.localizedDescription)")
+                }
+            }
+        }
+
+        // Update the local notification array and recalculate the unread count
+        notifications = notifications.map { notification in
+            var updatedNotification = notification
+            updatedNotification.read = true
+            return updatedNotification
+        }
+        calculateUnreadNotifications()
     }
     
     
