@@ -23,7 +23,7 @@ class MyBackendModel: ObservableObject {
                     
                     // Configure for Apple Pay
                     configuration.applePay = .init(
-                        merchantId: "your.merchant.id.here",
+                        merchantId: "merchant.com.cocoa.clear-out",
                         merchantCountryCode: "US" // Use your merchant country code
                     )
                     
