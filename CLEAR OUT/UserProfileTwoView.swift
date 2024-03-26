@@ -53,7 +53,9 @@ struct UserProfileTwoView: View {
                     NavigationLink(destination: NotificationsView(notifications: $notifications, markNotificationsAsRead: markNotificationsAsRead)) {
                         SettingRowTwo(icon: "bell", title: "Notifications", notificationCount: unreadNotificationCount)
                     }
-                    SettingRowTwo(icon: "map", title: "Addresses")
+                    NavigationLink(destination: AddressesView()) {
+                        SettingRowTwo(icon: "map", title: "Addresses")
+                    }
                     SettingRowTwo(icon: "creditcard", title: "Payment Method")
                     SettingRowTwo(icon: "list.bullet.rectangle.portrait", title: "Transaction History")
                     SettingRowTwo(icon: "questionmark.circle", title: "Help Center")

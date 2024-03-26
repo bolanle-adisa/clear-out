@@ -140,6 +140,7 @@ struct CheckoutView: View {
             print("Payment completed")
             showPaymentConfirmation = true
             createPaymentSuccessNotification()
+            saveAddressToFirestore() // Call the function to save the address
         case .canceled:
             // Payment canceled by the user
             print("Payment canceled")
@@ -147,6 +148,33 @@ struct CheckoutView: View {
             // Payment failed, show an error message
             print("Payment failed: \(error.localizedDescription)")
             // Show an error message or prompt to try a different payment method
+        }
+    }
+    
+    func saveAddressToFirestore() {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("User ID not found. Unable to save address.")
+            return
+        }
+        let db = Firestore.firestore()
+        
+        let addressData = [
+            "name": name,
+            "phoneNumber": phoneNumber,
+            "addressLine1": addressLine1,
+            "addressLine2": addressLine2,
+            "city": city,
+            "state": state,
+            "zipCode": zipCode,
+            "country": country
+        ]
+        
+        db.collection("users").document(userId).collection("addresses").addDocument(data: addressData) { error in
+            if let error = error {
+                print("Error saving address: \(error.localizedDescription)")
+            } else {
+                print("Address saved successfully")
+            }
         }
     }
     

@@ -15,8 +15,8 @@ struct AddressesView: View {
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 10) {
-                ForEach(addresses, id: \.self) { address in
-                    AddressCardView(address: address)
+                ForEach(addresses.indices, id: \.self) { index in
+                    AddressCardView(address: addresses[index])
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(Color(UIColor.systemBackground))
@@ -98,7 +98,8 @@ struct AddressCardView: View {
 
 
 // Ensure you have a UserAddress struct that matches your data structure
-struct UserAddress: Hashable {
+struct UserAddress: Identifiable, Hashable {
+    let id = UUID()
     let name: String
     let phoneNumber: String
     let addressLine1: String
