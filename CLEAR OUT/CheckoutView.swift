@@ -38,8 +38,8 @@ struct CheckoutView: View {
                 CustomTextField(placeholder: "Full Name", text: $name)
                     .keyboardType(.default)
 
-                CustomTextField(placeholder: "Phone Number", text: $phoneNumber, keyboardType: .phonePad)
-
+                CustomPhoneNumberField(text: $phoneNumber)
+                
                 CustomAutocompleteTextField(
                     placeholder: "Address Line 1",
                     text: $addressLine1,
@@ -223,6 +223,41 @@ struct CustomTextField: View {
             )
             .background(Color.white) // Consider changing if you have a different theme
             .foregroundColor(.black)
+    }
+}
+
+struct CustomPhoneNumberField: View {
+    @Binding var text: String
+
+    var body: some View {
+        TextField("Phone Number", text: $text)
+            .padding(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 10))
+            .keyboardType(.phonePad)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.gray.opacity(0.5), lineWidth: 2)
+            )
+            .background(Color.white)
+            .foregroundColor(.black)
+            .onChange(of: text) { newValue in
+                text = formatPhoneNumber(newValue)
+            }
+    }
+    
+    private func formatPhoneNumber(_ input: String) -> String {
+        let cleanedInput = input.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        let mask = "XXX-XXX-XXXX"
+        var result = ""
+        var index = cleanedInput.startIndex
+        for ch in mask where index < cleanedInput.endIndex {
+            if ch == "X" {
+                result.append(cleanedInput[index])
+                index = cleanedInput.index(after: index)
+            } else {
+                result.append(ch)
+            }
+        }
+        return result
     }
 }
 
