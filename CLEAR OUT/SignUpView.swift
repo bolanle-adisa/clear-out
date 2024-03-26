@@ -163,17 +163,36 @@ struct SignUpView: View {
                 self.passwordErrorMessage = error.localizedDescription
             } else if let userId = authResult?.user.uid {
                 let db = Firestore.firestore()
-                db.collection("users").document(userId).setData([
+                // Set user data
+                let userData: [String: Any] = [
                     "firstName": self.firstName,
                     "lastName": self.lastName,
                     "email": self.email,
                     "college": self.selectedCollege?.name ?? "Not Specified"
                     // Add other fields if necessary
-                ]) { error in
+                ]
+                
+                db.collection("users").document(userId).setData(userData) { error in
                     if let error = error {
-                        print("Error writing document: \(error)")
+                        print("Error writing user document: \(error)")
                         self.passwordErrorMessage = "Failed to save user data."
                     } else {
+                        
+                        let initialNotification: [String: Any] = [
+                            "title": "Welcome to CLEAR OUT!",
+                            "message": "Your account has been successfully created.",
+                            "timestamp": Timestamp(date: Date()),
+                            "read": false
+                        ]
+                        
+                        db.collection("users").document(userId).collection("notifications").addDocument(data: initialNotification) { error in
+                            if let error = error {
+                                print("Error adding initial notification: \(error)")
+                            } else {
+                                print("Initial notification added successfully")
+                            }
+                        }
+                        
                         DispatchQueue.main.async {
                             self.userSession.isAuthenticated = true
                             self.navigationActive = true // Triggers navigation to UserProfileTwoView
@@ -184,8 +203,7 @@ struct SignUpView: View {
             }
         }
     }
-
-    }
+}
 
 struct PasswordCriteriaView: View {
     let password: String
