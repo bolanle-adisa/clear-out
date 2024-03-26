@@ -153,8 +153,8 @@ struct CheckoutView: View {
     func createPaymentSuccessNotification() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         let db = Firestore.firestore()
-        let notification = UserNotification(id: UUID().uuidString, title: "Payment Successful", message: "Your payment was successful. Thank you for your purchase!", timestamp: Date())
-        let notificationData = ["id": notification.id, "title": notification.title, "message": notification.message, "timestamp": Timestamp(date: notification.timestamp)] as [String : Any]
+        let notification = UserNotification(id: UUID().uuidString, title: "Payment Successful", message: "Your payment was successful. Thank you for your purchase!", timestamp: Date(), read: false)
+        let notificationData = ["id": notification.id, "title": notification.title, "message": notification.message, "timestamp": Timestamp(date: notification.timestamp), "read": notification.read] as [String : Any]
         
         db.collection("users").document(userId).collection("notifications").document(notification.id).setData(notificationData) { error in
             if let error = error {

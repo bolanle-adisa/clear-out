@@ -12,4 +12,5 @@ struct UserNotification: Identifiable {
     var title: String
     var message: String
     var timestamp: Date
+    var read: Bool // Make sure this property exists
 }

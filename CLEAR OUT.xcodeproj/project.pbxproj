@@ -92,6 +92,7 @@
 		619D0C242B97D2F100520A18 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619D0C232B97D2F100520A18 /* APIKeys.swift */; };
 		61FEE6DA2BB2CF1E0036A93D /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */; };
 		61FEE6DC2BB2D4330036A93D /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */; };
+		61FEE6DE2BB2E5F30036A93D /* BadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DD2BB2E5F30036A93D /* BadgeModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +167,7 @@
 		619D0C232B97D2F100520A18 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
 		61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
+		61FEE6DD2BB2E5F30036A93D /* BadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +298,7 @@
 				614BFCC02BB1682000732AA6 /* PaymentConfirmationView.swift */,
 				61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */,
 				61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */,
+				61FEE6DD2BB2E5F30036A93D /* BadgeModifier.swift */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
 				61648B072B967AB300A5B7AA /* Preview Content */,
@@ -509,6 +512,7 @@
 				61648B5E2B9681CA00A5B7AA /* ItemDetails.swift in Sources */,
 				610F82232BB0D40900381FF0 /* PaymentSheetPresenter.swift in Sources */,
 				61648B482B967E6D00A5B7AA /* CustomCameraView.swift in Sources */,
+				61FEE6DE2BB2E5F30036A93D /* BadgeModifier.swift in Sources */,
 				61648B4E2B967ED300A5B7AA /* ItemForRentAndSale.swift in Sources */,
 				61FEE6DA2BB2CF1E0036A93D /* UserNotification.swift in Sources */,
 				61648B442B967E2200A5B7AA /* UserProfileTwoView.swift in Sources */,
