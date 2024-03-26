@@ -18,9 +18,6 @@ struct AddressesView: View {
                 ForEach(addresses.indices, id: \.self) { index in
                     AddressCardView(address: addresses[index])
                         .padding(.horizontal)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color(UIColor.systemBackground))
-                        .cornerRadius(10)
                 }
             }
             .padding(.top)
