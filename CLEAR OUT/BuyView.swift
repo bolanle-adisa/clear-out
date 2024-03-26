@@ -227,5 +227,7 @@ struct BuyView_Previews: PreviewProvider {
     static var previews: some View {
         BuyView()
             .environmentObject(WishlistManager.shared)
+            .environmentObject(UserSession())
+            .environmentObject(CartManager.shared)
     }
 }
