@@ -7,6 +7,8 @@
 import SwiftUI
 import Stripe
 import StripePaymentSheet
+import FirebaseAuth
+import FirebaseFirestore
 
 struct CheckoutView: View {
     @EnvironmentObject var cartManager: CartManager
@@ -137,6 +139,7 @@ struct CheckoutView: View {
             // Payment successful, present the confirmation page modally
             print("Payment completed")
             showPaymentConfirmation = true
+            createPaymentSuccessNotification()
         case .canceled:
             // Payment canceled by the user
             print("Payment canceled")
@@ -144,6 +147,21 @@ struct CheckoutView: View {
             // Payment failed, show an error message
             print("Payment failed: \(error.localizedDescription)")
             // Show an error message or prompt to try a different payment method
+        }
+    }
+    
+    func createPaymentSuccessNotification() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let db = Firestore.firestore()
+        let notification = UserNotification(id: UUID().uuidString, title: "Payment Successful", message: "Your payment was successful. Thank you for your purchase!", timestamp: Date())
+        let notificationData = ["id": notification.id, "title": notification.title, "message": notification.message, "timestamp": Timestamp(date: notification.timestamp)] as [String : Any]
+        
+        db.collection("users").document(userId).collection("notifications").document(notification.id).setData(notificationData) { error in
+            if let error = error {
+                print("Error adding notification: \(error.localizedDescription)")
+            } else {
+                print("Notification added successfully")
+            }
         }
     }
 }

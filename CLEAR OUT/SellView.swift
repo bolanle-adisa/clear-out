@@ -241,5 +241,6 @@ struct DetailView: View {
 struct SellView_Previews: PreviewProvider {
     static var previews: some View {
         SellView()
+            .environmentObject(UserSession())
     }
 }

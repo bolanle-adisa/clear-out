@@ -172,15 +172,37 @@ struct AddItemView: View {
         ]
 
         let db = Firestore.firestore()
-        db.collection("itemsForSaleAndRent").addDocument(data: data) { error in
-            if let error = error {
-                print("Error adding document: \(error.localizedDescription)")
-            } else {
-                print("Item successfully added to Firestore.")
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: Notification.Name("DidAddNewItem"), object: nil)
-                    self.presentationMode.wrappedValue.dismiss()
+            db.collection("itemsForSaleAndRent").addDocument(data: data) { error in
+                if let error = error {
+                    print("Error adding document: \(error.localizedDescription)")
+                } else {
+                    print("Item successfully added to Firestore.")
+                    
+                    // Create a notification for the added item
+                    self.createNewItemAddedNotification(userId: userId, itemName: self.itemName)
+                    
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: Notification.Name("DidAddNewItem"), object: nil)
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 }
+            }
+        }
+
+    private func createNewItemAddedNotification(userId: String, itemName: String) {
+        let db = Firestore.firestore()
+        let notificationData: [String: Any] = [
+            "title": "Item Added",
+            "message": "Your item '\(itemName)' has been added successfully.",
+            "timestamp": FieldValue.serverTimestamp(),
+            "read": false
+        ]
+        
+        db.collection("users").document(userId).collection("notifications").addDocument(data: notificationData) { error in
+            if let error = error {
+                print("Error adding item added notification: \(error.localizedDescription)")
+            } else {
+                print("Item added notification successfully created.")
             }
         }
     }

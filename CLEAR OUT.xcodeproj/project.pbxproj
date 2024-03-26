@@ -90,6 +90,8 @@
 		61648BA52B9685D800A5B7AA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA42B9685D800A5B7AA /* FirebaseStorage */; };
 		61648BA72B9685D800A5B7AA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA62B9685D800A5B7AA /* FirebaseStorageCombine-Community */; };
 		619D0C242B97D2F100520A18 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619D0C232B97D2F100520A18 /* APIKeys.swift */; };
+		61FEE6DA2BB2CF1E0036A93D /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */; };
+		61FEE6DC2BB2D4330036A93D /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +164,8 @@
 		61648B6D2B96829C00A5B7AA /* ItemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCard.swift; sourceTree = "<group>"; };
 		61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		619D0C232B97D2F100520A18 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
+		61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +294,8 @@
 				610F82282BB0EC9E00381FF0 /* AddressAutocompleteViewModel.swift */,
 				610F822C2BB0F30200381FF0 /* PlaceDetailsResponse.swift */,
 				614BFCC02BB1682000732AA6 /* PaymentConfirmationView.swift */,
+				61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */,
+				61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
 				61648B072B967AB300A5B7AA /* Preview Content */,
@@ -497,12 +503,14 @@
 				610F82272BB0E27500381FF0 /* AddressValidationService.swift in Sources */,
 				61648B642B96820C00A5B7AA /* ItemRow.swift in Sources */,
 				61648B5C2B96817000A5B7AA /* ItemDetailsView.swift in Sources */,
+				61FEE6DC2BB2D4330036A93D /* NotificationsView.swift in Sources */,
 				61648B4A2B967E9C00A5B7AA /* AddItemView.swift in Sources */,
 				61648B622B9681F000A5B7AA /* ColorChoices.swift in Sources */,
 				61648B5E2B9681CA00A5B7AA /* ItemDetails.swift in Sources */,
 				610F82232BB0D40900381FF0 /* PaymentSheetPresenter.swift in Sources */,
 				61648B482B967E6D00A5B7AA /* CustomCameraView.swift in Sources */,
 				61648B4E2B967ED300A5B7AA /* ItemForRentAndSale.swift in Sources */,
+				61FEE6DA2BB2CF1E0036A93D /* UserNotification.swift in Sources */,
 				61648B442B967E2200A5B7AA /* UserProfileTwoView.swift in Sources */,
 				614BFCC12BB1682100732AA6 /* PaymentConfirmationView.swift in Sources */,
 				61648B342B967BF900A5B7AA /* UserProfileView.swift in Sources */,
