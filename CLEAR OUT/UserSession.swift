@@ -16,6 +16,8 @@ class UserSession: ObservableObject {
     @Published var isAuthenticated = false
     @Published var firstName: String = ""
     @Published var university: String = ""
+    @Published var unreadNotifications: Int = 0
+    @Published var notifications: [UserNotification] = []
 
 
     // Add more properties and methods as needed

@@ -67,9 +67,9 @@ struct NotificationsView_Previews: PreviewProvider {
     static var previews: some View {
         // Create some sample notifications to display in the preview
         let sampleNotifications = [
-            UserNotification(id: "1", title: "Welcome!", message: "Thanks for joining our app.", timestamp: Date()),
-            UserNotification(id: "2", title: "Order Shipped", message: "Your order has shipped.", timestamp: Date().addingTimeInterval(-86400)), // 1 day ago
-            UserNotification(id: "3", title: "Payment Received", message: "We've received your payment.", timestamp: Date().addingTimeInterval(-172800)) // 2 days ago
+            UserNotification(id: "1", title: "Welcome!", message: "Thanks for joining our app.", timestamp: Date(), read: false),
+            UserNotification(id: "2", title: "Order Shipped", message: "Your order has shipped.", timestamp: Date().addingTimeInterval(-86400), read: false), // 1 day ago
+            UserNotification(id: "3", title: "Payment Received", message: "We've received your payment.", timestamp: Date().addingTimeInterval(-172800), read: false) // 2 days ago
         ]
         
         // Return the NotificationsView with the sample data

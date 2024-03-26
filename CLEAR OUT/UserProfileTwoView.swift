@@ -15,6 +15,7 @@ struct UserProfileTwoView: View {
     @State private var email: String = ""
     @State private var university: String = ""
     @State private var notifications: [UserNotification] = []
+    @State private var unreadNotificationCount = 0
 
 
     var body: some View {
@@ -50,7 +51,7 @@ struct UserProfileTwoView: View {
                 List {
                     SettingRowTwo(icon: "message", title: "Messages")
                     NavigationLink(destination: NotificationsView(notifications: self.notifications)) {
-                        SettingRowTwo(icon: "bell", title: "Notifications")
+                        SettingRowTwo(icon: "bell", title: "Notifications", notificationCount: unreadNotificationCount)
                     }
                     SettingRowTwo(icon: "map", title: "Addresses")
                     SettingRowTwo(icon: "creditcard", title: "Payment Method")
@@ -72,6 +73,7 @@ struct UserProfileTwoView: View {
             }
             .onAppear {
                 fetchUserData()
+                calculateUnreadNotifications()
             }
         }
     }
@@ -95,6 +97,7 @@ struct UserProfileTwoView: View {
                     self.userSession.firstName = self.firstName
                     self.userSession.university = self.university
                 }
+                self.calculateUnreadNotifications()
             } else {
                 print("Document does not exist or error: \(error?.localizedDescription ?? "unknown error")")
             }
@@ -103,13 +106,14 @@ struct UserProfileTwoView: View {
         // Fetch notifications
         db.collection("users").document(userId).collection("notifications").order(by: "timestamp", descending: true).getDocuments { (querySnapshot, error) in
             if let querySnapshot = querySnapshot {
-                self.notifications = querySnapshot.documents.map { document -> UserNotification in
+                self.notifications = querySnapshot.documents.compactMap { document -> UserNotification? in
                     let data = document.data()
                     return UserNotification(
                         id: document.documentID,
                         title: data["title"] as? String ?? "",
                         message: data["message"] as? String ?? "",
-                        timestamp: (data["timestamp"] as? Timestamp)?.dateValue() ?? Date()
+                        timestamp: (data["timestamp"] as? Timestamp)?.dateValue() ?? Date(),
+                        read: data["read"] as? Bool ?? false
                     )
                 }
             } else {
@@ -127,16 +131,22 @@ struct UserProfileTwoView: View {
         }
     }
     
+    private func calculateUnreadNotifications() {
+        unreadNotificationCount = notifications.filter { !$0.read }.count
+    }
+    
     
     struct SettingRowTwo: View {
         let icon: String
         let title: String
         let detail: String?
+        var notificationCount: Int = 0
         
-        init(icon: String, title: String, detail: String? = nil) {
-            self.icon = icon
-            self.title = title
-            self.detail = detail
+        init(icon: String, title: String, detail: String? = nil, notificationCount: Int = 0) {
+                self.icon = icon
+                self.title = title
+                self.detail = detail
+                self.notificationCount = notificationCount
         }
         
         var body: some View {
@@ -148,6 +158,14 @@ struct UserProfileTwoView: View {
                     Text(detail)
                         .foregroundColor(.gray)
                 }
+                if notificationCount > 0 {
+                    Text("\(notificationCount)")
+                        .font(.caption2)
+                        .padding(5)
+                        .foregroundColor(.white)
+                        .background(Color.red)
+                        .clipShape(Circle())
+                }
             }
             .padding()
         }
@@ -156,7 +174,15 @@ struct UserProfileTwoView: View {
 
 struct UserProfileTwoView_Previews: PreviewProvider {
     static var previews: some View {
-        UserProfileTwoView()
-            .environmentObject(UserSession()) // Mock user session for preview
+        let mockUserSession = UserSession()
+        mockUserSession.firstName = "John"
+        mockUserSession.university = "Example University"
+        mockUserSession.notifications = [
+            UserNotification(id: "1", title: "Welcome!", message: "Thanks for joining our app.", timestamp: Date(), read: false),
+            UserNotification(id: "2", title: "Order Shipped", message: "Your order has shipped.", timestamp: Date().addingTimeInterval(-86400), read: true)
+        ]
+        
+        return UserProfileTwoView()
+            .environmentObject(mockUserSession)
     }
 }
