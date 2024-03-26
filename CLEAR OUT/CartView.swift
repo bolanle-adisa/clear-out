@@ -82,7 +82,11 @@ struct CartView: View {
                     .padding()
 
                     Button(action: {
-                        showCheckoutView = true  // Present the CheckoutView
+                        if !cartManager.cartItems.isEmpty {
+                            showCheckoutView = true
+                        } else {
+                            print("Your cart is empty. Please add items to your cart before checking out.")
+                        }
                     }) {
                         Text("Checkout")
                             .frame(maxWidth: .infinity)

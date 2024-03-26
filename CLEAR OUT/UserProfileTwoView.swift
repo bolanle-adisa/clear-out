@@ -83,11 +83,18 @@ struct UserProfileTwoView: View {
                 self.firstName = data?["firstName"] as? String ?? "User"
                 self.email = data?["email"] as? String ?? ""
                 self.university = data?["college"] as? String ?? "Not Specified"
+                
+                // Update UserSession here
+                DispatchQueue.main.async {
+                    self.userSession.firstName = self.firstName
+                    self.userSession.university = self.university // Ensure you have a university property in UserSession
+                }
             } else {
                 print("Document does not exist or error: \(error?.localizedDescription ?? "unknown error")")
             }
         }
     }
+
     
     private func logoutUser() {
         do {

@@ -11,6 +11,7 @@ struct PaymentConfirmationView: View {
     @Environment(\.presentationMode) var presentationMode
     var continueShopping: () -> Void // Closure to handle continue shopping action
     @EnvironmentObject var cartManager: CartManager
+    @EnvironmentObject var userSession: UserSession
     
     var body: some View {
         VStack {
@@ -29,6 +30,14 @@ struct PaymentConfirmationView: View {
                 .font(.headline)
                 .foregroundColor(.secondary)
                 .padding(.top, 10)
+            
+            if !userSession.firstName.isEmpty && !userSession.university.isEmpty {
+                Text("\(userSession.firstName) at \(userSession.university) will ship out your items shortly.")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }
             
             Spacer()
             
@@ -54,7 +63,11 @@ struct PaymentConfirmationView: View {
 
 struct PaymentConfirmationView_Previews: PreviewProvider {
     static var previews: some View {
+        let userSessionPreview = UserSession()
+        
         PaymentConfirmationView(continueShopping: {})
             .environmentObject(CartManager.shared)
+            .environmentObject(userSessionPreview)
     }
 }
+// trying something
