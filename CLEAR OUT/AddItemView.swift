@@ -207,22 +207,41 @@ struct AddItemView: View {
         ]
 
         let db = Firestore.firestore()
-            db.collection("itemsForSaleAndRent").addDocument(data: data) { error in
-                if let error = error {
-                    print("Error adding document: \(error.localizedDescription)")
-                } else {
-                    print("Item successfully added to Firestore.")
-                    
-                    // Create a notification for the added item
-                    self.createNewItemAddedNotification(userId: userId, itemName: self.itemName)
-                    
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: Notification.Name("DidAddNewItem"), object: nil)
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
+        db.collection("itemsForSaleAndRent").addDocument(data: data) { error in
+            if let error = error {
+                print("Error adding document: \(error.localizedDescription)")
+            } else {
+                print("Item successfully added to Firestore.")
+                
+                // Create a notification for the added item
+                self.createNewItemAddedNotification(userId: userId, itemName: self.itemName)
+                
+                // Create a new ItemForSaleAndRent object with the added item data
+                let newItem = ItemForSaleAndRent(
+                    id: "", // Leave the ID empty for now
+                    name: self.itemName,
+                    description: self.itemDescription,
+                    price: salePrice,
+                    size: self.selectedSize,
+                    color: colorChoices[self.selectedColorIndex].name,
+                    mediaUrl: url,
+                    isVideo: isVideo,
+                    rentPrice: rentalPrice,
+                    rentPeriod: rentalPeriod,
+                    userId: userId,
+                    sold: false
+                )
+                
+                // Append the new item to the itemsForSaleAndRent array
+                self.itemsForSaleAndRent.append(newItem)
+                
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name("DidAddNewItem"), object: nil)
+                    self.presentationMode.wrappedValue.dismiss()
                 }
             }
         }
+    }
 
     private func createNewItemAddedNotification(userId: String, itemName: String) {
         let db = Firestore.firestore()

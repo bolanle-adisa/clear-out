@@ -14,6 +14,7 @@ struct ItemDetailsView: View {
     let item: ItemForSaleAndRent
     @State private var showingMarkAsSoldConfirmation = false
     @State private var showingDeleteConfirmation = false
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         ScrollView {
@@ -156,6 +157,8 @@ struct ItemDetailsView: View {
 
                 // Remove the item from the user's list of items for sale and rent
                 db.collection("users").document(userId).collection("itemsForSaleAndRent").document(itemId).delete()
+                
+                presentationMode.wrappedValue.dismiss()
             }
         }
     }

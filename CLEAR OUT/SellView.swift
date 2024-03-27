@@ -13,7 +13,13 @@ import FirebaseFirestore
 import FirebaseAuth
 
 struct SellView: View {
-    @State private var itemForSaleAndRent: [ItemForSaleAndRent] = []
+    @State private var itemForSaleAndRent: [ItemForSaleAndRent] = [] {
+            didSet {
+                // Refresh the view when itemForSaleAndRent changes
+                print("ItemForSaleAndRent updated, refreshing view")
+                fetchItemsForSale()
+            }
+        }
     @State private var showingAddItemView = false
     @State private var selectedItem: ItemForSaleAndRent?
     @EnvironmentObject var userSession: UserSession
