@@ -165,6 +165,7 @@ struct SellView: View {
         let db = Firestore.firestore()
         db.collection("itemsForSaleAndRent")
           .whereField("userId", isEqualTo: userId)
+          .whereField("sold", isEqualTo: false)
           .getDocuments { snapshot, error in
             if let error = error {
                 print("Error fetching items: \(error)(SellView)")

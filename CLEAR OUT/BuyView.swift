@@ -176,28 +176,36 @@ struct BuyView: View {
 
     private func fetchItemsForSale() {
         let db = Firestore.firestore()
-        db.collection("itemsForSaleAndRent").getDocuments { (querySnapshot, err) in // Updated collection name
-            if let err = err {
-                print("Error getting documents: \(err)(BuyView)")
-            } else if let querySnapshot = querySnapshot {
-                print("Successfully fetched \(querySnapshot.documents.count) items(BuyView)")
-                var mappedItems: [ItemForSaleAndRent] = []
-                for document in querySnapshot.documents {
-                    do {
-                        let item = try document.data(as: ItemForSaleAndRent.self)
-                        mappedItems.append(item)
-                    } catch {
-                        print("Failed to map document to ItemForSaleAndRent: \(error)(BuyView)")
+        db.collection("itemsForSaleAndRent")
+            .getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)(BuyView)")
+                } else if let querySnapshot = querySnapshot {
+                    print("Successfully fetched \(querySnapshot.documents.count) items(BuyView)")
+                    var mappedItems: [ItemForSaleAndRent] = []
+                    for document in querySnapshot.documents {
+                        do {
+                            var item = try document.data(as: ItemForSaleAndRent.self)
+                            
+                            // Check if the 'sold' field exists, and if it's false or doesn't exist, add the item
+                            if let sold = document.data()["sold"] as? Bool, !sold {
+                                mappedItems.append(item)
+                            } else if document.data()["sold"] == nil {
+                                // If the 'sold' field doesn't exist, assume it's not sold and add the item
+                                mappedItems.append(item)
+                            }
+                        } catch {
+                            print("Failed to map document to ItemForSaleAndRent: \(error)(BuyView)")
+                        }
+                    }
+                    self.itemsForSaleAndRent = mappedItems
+                    if self.itemsForSaleAndRent.isEmpty {
+                        print("ItemsForSaleAndRent is empty after fetch(BuyView).")
+                    } else {
+                        print("Mapped \(self.itemsForSaleAndRent.count) items successfully(BuyView).")
                     }
                 }
-                self.itemsForSaleAndRent = mappedItems
-                if self.itemsForSaleAndRent.isEmpty {
-                    print("ItemsForSaleAndRent is empty after fetch(BuyView).")
-                } else {
-                    print("Mapped \(self.itemsForSaleAndRent.count) items successfully(BuyView).")
-                }
             }
-        }
     }
     
     private func filterItems() {

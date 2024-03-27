@@ -22,4 +22,5 @@ struct ItemForSaleAndRent: Identifiable, Codable {
     var rentPeriod: String?
     var userId: String
     @ServerTimestamp var timestamp: Date?
+    var sold: Bool?
 }

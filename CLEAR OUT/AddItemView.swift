@@ -202,7 +202,8 @@ struct AddItemView: View {
             "rentPrice": rentalPrice,
             "rentPeriod": rentalPeriod,
             "size": selectedSize,
-            "color": colorChoices[selectedColorIndex].name // Assuming colorChoices is an array of some color structure
+            "color": colorChoices[selectedColorIndex].name, // Assuming colorChoices is an array of some color structure
+            "sold": false
         ]
 
         let db = Firestore.firestore()

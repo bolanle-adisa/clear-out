@@ -95,6 +95,7 @@
 		61FEE6DE2BB2E5F30036A93D /* BadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DD2BB2E5F30036A93D /* BadgeModifier.swift */; };
 		61FEE6E02BB2F93B0036A93D /* AddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */; };
 		61FEE6E62BB348E60036A93D /* PaymentMethodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6E52BB348E50036A93D /* PaymentMethodsView.swift */; };
+		61FEE6E82BB3D2350036A93D /* TransactionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +173,7 @@
 		61FEE6DD2BB2E5F30036A93D /* BadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModifier.swift; sourceTree = "<group>"; };
 		61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesView.swift; sourceTree = "<group>"; };
 		61FEE6E52BB348E50036A93D /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; };
+		61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,6 +307,7 @@
 				61FEE6DD2BB2E5F30036A93D /* BadgeModifier.swift */,
 				61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */,
 				61FEE6E52BB348E50036A93D /* PaymentMethodsView.swift */,
+				61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
 				61648B072B967AB300A5B7AA /* Preview Content */,
@@ -519,6 +522,7 @@
 				61648B5E2B9681CA00A5B7AA /* ItemDetails.swift in Sources */,
 				610F82232BB0D40900381FF0 /* PaymentSheetPresenter.swift in Sources */,
 				61648B482B967E6D00A5B7AA /* CustomCameraView.swift in Sources */,
+				61FEE6E82BB3D2350036A93D /* TransactionHistoryView.swift in Sources */,
 				61FEE6DE2BB2E5F30036A93D /* BadgeModifier.swift in Sources */,
 				61648B4E2B967ED300A5B7AA /* ItemForRentAndSale.swift in Sources */,
 				61FEE6DA2BB2CF1E0036A93D /* UserNotification.swift in Sources */,
