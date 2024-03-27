@@ -14,7 +14,9 @@ class ItemsForSaleManager: ObservableObject {
 
     func fetchItemsForSaleAndRent() {
         let db = Firestore.firestore()
-        db.collection("itemsForSaleAndRent").getDocuments { [weak self] (querySnapshot, err) in
+        db.collection("itemsForSaleAndRent")
+            .whereField("sold", isEqualTo: false)
+            .getDocuments { [weak self] (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else if let querySnapshot = querySnapshot {

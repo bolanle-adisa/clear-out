@@ -22,6 +22,7 @@ struct ItemDetails: Codable, Identifiable {
     var rentPeriod: String?
     var userId: String
     @ServerTimestamp var timestamp: Date?
+    var sold: Bool?
     
     init(from dictionary: [String: Any]) {
         self.id = dictionary["id"] as? String
@@ -36,6 +37,7 @@ struct ItemDetails: Codable, Identifiable {
         self.rentPrice = dictionary["rentPrice"] as? Double
         self.rentPeriod = dictionary["rentPeriod"] as? String
         self.userId = dictionary["userId"] as? String ?? ""
+        self.sold = dictionary["sold"] as? Bool
     }
 
 }

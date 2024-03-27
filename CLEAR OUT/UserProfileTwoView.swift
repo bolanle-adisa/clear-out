@@ -71,7 +71,9 @@ struct UserProfileTwoView: View {
                     NavigationLink(destination: PaymentMethodsView(paymentMethods: paymentMethods, bankAccounts: bankAccounts)) {
                         SettingRowTwo(icon: "creditcard", title: "Payment Information")
                     }
-                    SettingRowTwo(icon: "list.bullet.rectangle.portrait", title: "Transaction History")
+                    NavigationLink(destination: TransactionHistoryView()) {
+                        SettingRowTwo(icon: "list.bullet.rectangle.portrait", title: "Transaction History")
+                    }
                     SettingRowTwo(icon: "questionmark.circle", title: "Help Center")
                     SettingRowTwo(icon: "gearshape", title: "Settings")
                     

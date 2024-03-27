@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseAuth
 
 struct ItemDetailsView: View {
     let item: ItemForSaleAndRent
@@ -136,9 +137,28 @@ struct ItemDetailsView: View {
         }
     
     private func markAsSold() {
-            // Implement the functionality to mark the item as sold
-            print("Item marked as sold")
+        guard let itemId = item.id, let userId = Auth.auth().currentUser?.uid else {
+            return
         }
+
+        let db = Firestore.firestore()
+        let itemRef = db.collection("itemsForSaleAndRent").document(itemId)
+
+        // Update the item as sold
+        itemRef.updateData([
+            "sold": true,
+            "soldTimestamp": FieldValue.serverTimestamp()
+        ]) { error in
+            if let error = error {
+                print("Error marking item as sold: \(error.localizedDescription)")
+            } else {
+                print("Item marked as sold successfully")
+
+                // Remove the item from the user's list of items for sale and rent
+                db.collection("users").document(userId).collection("itemsForSaleAndRent").document(itemId).delete()
+            }
+        }
+    }
         
     private func deleteItem() {
         // Implement the functionality to delete the item
