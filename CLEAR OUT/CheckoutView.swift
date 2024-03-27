@@ -136,18 +136,50 @@ struct CheckoutView: View {
     func handlePaymentResult(_ result: PaymentSheetResult) {
         switch result {
         case .completed:
-            // Payment successful, present the confirmation page modally
             print("Payment completed")
             showPaymentConfirmation = true
             createPaymentSuccessNotification()
-            saveAddressToFirestore() // Call the function to save the address
+            saveAddressToFirestore()
+            savePurchasedItemsToFirestore() // Save purchased items to Firestore
         case .canceled:
-            // Payment canceled by the user
             print("Payment canceled")
         case .failed(let error):
-            // Payment failed, show an error message
             print("Payment failed: \(error.localizedDescription)")
-            // Show an error message or prompt to try a different payment method
+        }
+    }
+    
+    func savePurchasedItemsToFirestore() {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("User ID not found. Unable to save purchased items.")
+            return
+        }
+
+        let db = Firestore.firestore()
+        let purchasedItemsData = cartManager.cartItems.map { cartItem in
+            [
+                "name": cartItem.item.name,
+                "description": cartItem.item.description,
+                "price": cartItem.price,
+                "size": cartItem.item.size,
+                "color": cartItem.item.color,
+                "mediaUrl": cartItem.item.mediaUrl,
+                "isVideo": cartItem.item.isVideo,
+                "rentPrice": cartItem.item.rentPrice,
+                "rentPeriod": cartItem.item.rentPeriod,
+                "userId": cartItem.item.userId,
+                "timestamp": FieldValue.serverTimestamp(),
+                "sold": false
+            ]
+        }
+
+        for itemData in purchasedItemsData {
+            db.collection("users").document(userId).collection("purchasedItems").addDocument(data: itemData) { error in
+                if let error = error {
+                    print("Error saving purchased item: \(error.localizedDescription)")
+                } else {
+                    print("Purchased item saved successfully")
+                }
+            }
         }
     }
     
