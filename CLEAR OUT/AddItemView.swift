@@ -30,15 +30,19 @@ struct AddItemView: View {
     @State private var videoURL: URL?
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @State private var selectedColorIndex = 0
-
-
-
+    @State private var bankName: String = ""
+    @State private var accountNumber: String = ""
+    @State private var routingNumber: String = ""
+    @State private var filteredBankNames: [String] = []
+    @State private var showSuggestions: Bool = false
 
 
     let sizes = ["XS", "S", "M", "L", "XL", "XXL"]
     let categories = ["Women's Clothes", "Men's Clothes", "Women's Shoes", "Men's Shoes","Electronics", "Dorm Essentials", "Books" ]
     let currencyFormatter = NumberFormatter.currencyFormatter()
     let rentPeriodOptions = ["1 day", "1 week", "2 weeks", "1 month"]
+    private let bankNames = ["Chase Bank", "Bank of America", "Wells Fargo", "Citibank", "U.S. Bank"]
+        
 
     var body: some View {
             NavigationView {
@@ -51,6 +55,36 @@ struct AddItemView: View {
                     rentOptionsSection
                     itemSizeSection
                     itemColorSection
+                    
+                    Section(header: Text("Bank Account")) {
+                        VStack(alignment: .leading) {
+                            TextField("Bank Name", text: $bankName, onEditingChanged: { isEditing in
+                                // Show suggestions when editing begins
+                                self.showSuggestions = isEditing
+                            })
+                            .onChange(of: bankName) { newValue in
+                                if newValue.isEmpty {
+                                    filteredBankNames = []
+                                } else {
+                                    filteredBankNames = bankNames.filter { $0.lowercased().contains(newValue.lowercased()) }
+                                }
+                            }
+
+                            // Show the SuggestionsView when the user is editing the text field
+                            if showSuggestions {
+                                SuggestionsView(suggestions: filteredBankNames) { suggestion in
+                                    // Hide suggestions and update the text field when a suggestion is tapped
+                                    self.bankName = suggestion
+                                    self.showSuggestions = false
+                                }
+                            }
+                        }
+
+                        TextField("Account Number", text: $accountNumber)
+                            .keyboardType(.numberPad)
+                        TextField("Routing Number", text: $routingNumber)
+                            .keyboardType(.numberPad)
+                    }
                 }
                 .navigationTitle("Add New Item")
                 .navigationBarItems(trailing: Button("Done") {
@@ -376,6 +410,35 @@ struct CurrencyInputField: View {
             TextField("Amount", value: $value, formatter: formatter)
                 .keyboardType(.decimalPad)
         }
+    }
+}
+
+struct SuggestionsView: View {
+    let suggestions: [String]
+    var didSelectSuggestion: (String) -> Void
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            ForEach(suggestions, id: \.self) { suggestion in
+                Text(suggestion)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 15)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle()) // Make the entire row tappable
+                    .onTapGesture {
+                        self.didSelectSuggestion(suggestion)
+                    }
+                    .background(Color(UIColor.systemBackground)) // Match system background color
+                    .foregroundColor(.primary) // Use primary text color
+            }
+        }
+        .background(Color(UIColor.secondarySystemBackground)) // Slightly different background for the suggestions container
+        .clipShape(RoundedRectangle(cornerRadius: 10)) // Rounded corners for the container
+        .shadow(radius: 5) // Subtle shadow for depth
+        .overlay(
+            RoundedRectangle(cornerRadius: 10) // Rounded border
+                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+        )
     }
 }
 
