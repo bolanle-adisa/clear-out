@@ -22,6 +22,13 @@ struct UserProfileTwoView: View {
         PaymentMethod(id: "2", cardBrand: "MasterCard", last4: "5678"),
         PaymentMethod(id: "3", cardBrand: "Amex", last4: "9012")
     ]
+    
+    @State private var bankAccounts: [BankAccount] = [
+        // Initialize with some bank accounts...
+        BankAccount(id: "1", bankName: "Chase Bank", accountNumber: "4791"),
+//        BankAccount(id: "2", bankName: "Bank of America", accountNumber: "4883"),
+//        // ... more bank accounts
+    ]
 
     var body: some View {
         NavigationView {
@@ -61,8 +68,8 @@ struct UserProfileTwoView: View {
                     NavigationLink(destination: AddressesView()) {
                         SettingRowTwo(icon: "map", title: "Addresses")
                     }
-                    NavigationLink(destination: PaymentMethodsView(paymentMethods: paymentMethods)) {
-                        SettingRowTwo(icon: "creditcard", title: "Payment Methods")
+                    NavigationLink(destination: PaymentMethodsView(paymentMethods: paymentMethods, bankAccounts: bankAccounts)) {
+                        SettingRowTwo(icon: "creditcard", title: "Payment Information")
                     }
                     SettingRowTwo(icon: "list.bullet.rectangle.portrait", title: "Transaction History")
                     SettingRowTwo(icon: "questionmark.circle", title: "Help Center")
