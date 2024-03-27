@@ -73,6 +73,7 @@ struct ContentView: View {
                 selectedTab = 4
             }
         }
+        .preferredColorScheme(.light)
     }
 }
 

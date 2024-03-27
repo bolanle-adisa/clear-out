@@ -12,46 +12,30 @@ import FirebaseAuth
 struct TransactionHistoryView: View {
     @State private var soldItems: [ItemForSaleAndRent] = []
     @State private var purchasedItems: [ItemForSaleAndRent] = []
+    @State private var selectedToggle = 0
+    
+    let toggleOptions = ["Sold Items", "Bought Items"]
     
     var body: some View {
-        List {
-            Section(header: Text("Sold Items")) {
-                ForEach(soldItems) { item in
-                    VStack(alignment: .leading) {
-                        Text(item.name)
-                            .font(.headline)
-                        
-                        Text("Price: $\(item.price ?? 0, specifier: "%.2f")")
-                            .font(.subheadline)
-                        
-                        if let timestamp = item.timestamp {
-                            Text("Sold on: \(formattedDate(timestamp))")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                    }
+        VStack {
+            Picker("Toggle Options", selection: $selectedToggle) {
+                ForEach(0..<toggleOptions.count) { index in
+                    Text(self.toggleOptions[index]).tag(index)
                 }
             }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
             
-            Section(header: Text("Bought Items")) {
-                ForEach(purchasedItems) { item in
-                    VStack(alignment: .leading) {
-                        Text(item.name)
-                            .font(.headline)
-                        
-                        Text("Price: $\(item.price ?? 0, specifier: "%.2f")")
-                            .font(.subheadline)
-                        
-                        if let timestamp = item.timestamp {
-                            Text("Purchased on: \(formattedDate(timestamp))")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
+            ScrollView {
+                LazyVStack(spacing: 10) {
+                    ForEach(selectedToggle == 0 ? soldItems : purchasedItems) { item in
+                        TransactionCardView(item: item, isSold: selectedToggle == 0)
+                            .padding(.horizontal)
                     }
                 }
+                .padding(.vertical)
             }
         }
-        .listStyle(GroupedListStyle())
         .navigationTitle("Transaction History")
         .onAppear {
             fetchSoldItems()
@@ -114,10 +98,50 @@ struct TransactionHistoryView: View {
                 }
             }
     }
+}
 
-    private func formattedDate(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, yyyy"
-        return dateFormatter.string(from: date)
+    struct TransactionCardView: View {
+        var item: ItemForSaleAndRent
+        var isSold: Bool
+        
+        var body: some View {
+            VStack(alignment: .leading, spacing: 5) {
+                HStack {
+                    Image(systemName: isSold ? "tag.fill" : "cart.fill")
+                        .foregroundColor(isSold ? .blue : .blue)
+                    Text(item.name)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    Spacer()
+                    if let timestamp = item.timestamp {
+                        Text(formattedDate(timestamp))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                Text("Price: $\(item.price ?? 0, specifier: "%.2f")")
+                    .font(.subheadline)
+                    .foregroundColor(isSold ? .green : .red)
+            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            .padding(.vertical, 5)
+        }
+        
+        private func formattedDate(_ date: Date) -> String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM d, yyyy"
+            return dateFormatter.string(from: date)
+        }
+    }
+
+struct TransactionHistoryView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            TransactionHistoryView()
+        }
     }
 }

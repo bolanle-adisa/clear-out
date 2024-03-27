@@ -96,6 +96,7 @@
 		61FEE6E02BB2F93B0036A93D /* AddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */; };
 		61FEE6E62BB348E60036A93D /* PaymentMethodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6E52BB348E50036A93D /* PaymentMethodsView.swift */; };
 		61FEE6E82BB3D2350036A93D /* TransactionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */; };
+		61FEE6EA2BB4375E0036A93D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6E92BB4375D0036A93D /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +175,7 @@
 		61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesView.swift; sourceTree = "<group>"; };
 		61FEE6E52BB348E50036A93D /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; };
 		61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryView.swift; sourceTree = "<group>"; };
+		61FEE6E92BB4375D0036A93D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -308,6 +310,7 @@
 				61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */,
 				61FEE6E52BB348E50036A93D /* PaymentMethodsView.swift */,
 				61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */,
+				61FEE6E92BB4375D0036A93D /* SettingsView.swift */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
 				61648B072B967AB300A5B7AA /* Preview Content */,
@@ -526,6 +529,7 @@
 				61FEE6DE2BB2E5F30036A93D /* BadgeModifier.swift in Sources */,
 				61648B4E2B967ED300A5B7AA /* ItemForRentAndSale.swift in Sources */,
 				61FEE6DA2BB2CF1E0036A93D /* UserNotification.swift in Sources */,
+				61FEE6EA2BB4375E0036A93D /* SettingsView.swift in Sources */,
 				61648B442B967E2200A5B7AA /* UserProfileTwoView.swift in Sources */,
 				614BFCC12BB1682100732AA6 /* PaymentConfirmationView.swift in Sources */,
 				61648B342B967BF900A5B7AA /* UserProfileView.swift in Sources */,
