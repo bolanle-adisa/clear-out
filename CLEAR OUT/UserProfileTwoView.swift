@@ -17,6 +17,11 @@ struct UserProfileTwoView: View {
     @State private var notifications: [UserNotification] = []
     @State private var unreadNotificationCount = 0
 
+    let paymentMethods: [PaymentMethod] = [
+        PaymentMethod(id: "1", cardBrand: "Visa", last4: "4242"),
+        PaymentMethod(id: "2", cardBrand: "MasterCard", last4: "5678"),
+        PaymentMethod(id: "3", cardBrand: "Amex", last4: "9012")
+    ]
 
     var body: some View {
         NavigationView {
@@ -56,7 +61,9 @@ struct UserProfileTwoView: View {
                     NavigationLink(destination: AddressesView()) {
                         SettingRowTwo(icon: "map", title: "Addresses")
                     }
-                    SettingRowTwo(icon: "creditcard", title: "Payment Method")
+                    NavigationLink(destination: PaymentMethodsView(paymentMethods: paymentMethods)) {
+                        SettingRowTwo(icon: "creditcard", title: "Payment Methods")
+                    }
                     SettingRowTwo(icon: "list.bullet.rectangle.portrait", title: "Transaction History")
                     SettingRowTwo(icon: "questionmark.circle", title: "Help Center")
                     SettingRowTwo(icon: "gearshape", title: "Settings")
