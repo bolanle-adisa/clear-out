@@ -179,7 +179,7 @@ struct SignUpView: View {
                     } else {
                         
                         let initialNotification: [String: Any] = [
-                            "title": "Welcome to CLEAR OUT!",
+                            "title": "Welcome to ClearOut!",
                             "message": "Your account has been successfully created.",
                             "timestamp": Timestamp(date: Date()),
                             "read": false
