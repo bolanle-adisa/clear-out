@@ -15,6 +15,7 @@ struct ItemDetailsView: View {
     @State private var showingMarkAsSoldConfirmation = false
     @State private var showingDeleteConfirmation = false
     @Environment(\.presentationMode) var presentationMode
+    @Binding var itemForSaleAndRent: [ItemForSaleAndRent]
 
     var body: some View {
         ScrollView {
@@ -154,11 +155,37 @@ struct ItemDetailsView: View {
                 print("Error marking item as sold: \(error.localizedDescription)")
             } else {
                 print("Item marked as sold successfully")
+                
+                // Create a notification for the sold item
+                self.createItemSoldNotification(userId: userId, itemName: self.item.name)
 
                 // Remove the item from the user's list of items for sale and rent
                 db.collection("users").document(userId).collection("itemsForSaleAndRent").document(itemId).delete()
-                
+
+                // Refresh the list of items in the SellView
+                if let index = self.itemForSaleAndRent.firstIndex(where: { $0.id == self.item.id }) {
+                    self.itemForSaleAndRent.remove(at: index)
+                }
+
                 presentationMode.wrappedValue.dismiss()
+            }
+        }
+    }
+    
+    func createItemSoldNotification(userId: String, itemName: String) {
+        let db = Firestore.firestore()
+        let notificationData: [String: Any] = [
+            "title": "Item Sold",
+            "message": "Your item '\(itemName)' has been marked as sold.",
+            "timestamp": FieldValue.serverTimestamp(),
+            "read": false
+        ]
+        
+        db.collection("users").document(userId).collection("notifications").addDocument(data: notificationData) { error in
+            if let error = error {
+                print("Error adding item sold notification: \(error.localizedDescription)")
+            } else {
+                print("Item sold notification successfully created.")
             }
         }
     }
@@ -193,6 +220,6 @@ struct ItemDetailsView_Previews: PreviewProvider {
             rentPeriod: "Not Applicable",
             userId: "user123"
         )
-        ItemDetailsView(item: dummyItem)
+        ItemDetailsView(item: dummyItem, itemForSaleAndRent: .constant([]))
     }
 }

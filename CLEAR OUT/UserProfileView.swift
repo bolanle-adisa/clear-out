@@ -17,68 +17,74 @@ struct UserProfileView: View {
     @Binding var showingProfile: Bool
 
     var body: some View {
-        VStack {
-            Text("SIGN IN OR CREATE ACCOUNT")
-                .font(.headline)
-                .fontWeight(.bold)
-                .padding()
+           NavigationView {
+               VStack {
+                   Text("SIGN IN OR CREATE ACCOUNT")
+                       .font(.headline)
+                       .fontWeight(.bold)
+                       .padding()
 
-            TextField("Email address", text: $emailAddress)
-                .padding(9)
-                .padding(.horizontal, 30)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .overlay(emailOverlayView)
-                .padding()
+                   TextField("Email address", text: $emailAddress)
+                       .padding(9)
+                       .padding(.horizontal, 30)
+                       .background(Color(.systemGray6))
+                       .cornerRadius(8)
+                       .overlay(emailOverlayView)
+                       .padding()
 
-            if let emailErrorMessage = emailErrorMessage {
-                Text(emailErrorMessage)
-                    .foregroundColor(.red)
-                    .padding(.bottom)
-            }
+                   if let emailErrorMessage = emailErrorMessage {
+                       Text(emailErrorMessage)
+                           .foregroundColor(.red)
+                           .padding(.bottom)
+                   }
 
-            Button(action: {
-                if isEmailValid(email: emailAddress) {
-                    emailErrorMessage = nil
-                    checkUserAccount(email: emailAddress) { exists in
-                        if exists {
-                            self.showSignInView = true
-                            self.showSignUpView = false
-                        } else {
-                            self.showSignUpView = true
-                            self.showSignInView = false
-                        }
-                    }
-                } else {
-                    emailErrorMessage = "Please enter a valid email address."
-                }
-            }) {
-                Text("Continue")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .background(Color.black)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            .padding(.horizontal)
+                   Button(action: {
+                       if isEmailValid(email: emailAddress) {
+                           emailErrorMessage = nil
+                           checkUserAccount(email: emailAddress) { exists in
+                               if exists {
+                                   self.showSignInView = true
+                                   self.showSignUpView = false
+                               } else {
+                                   self.showSignUpView = true
+                                   self.showSignInView = false
+                               }
+                           }
+                       } else {
+                           emailErrorMessage = "Please enter a valid email address."
+                       }
+                   }) {
+                       Text("Continue")
+                           .frame(minWidth: 0, maxWidth: .infinity)
+                           .padding()
+                           .background(Color.black)
+                           .foregroundColor(.white)
+                           .cornerRadius(10)
+                   }
+                   .padding(.horizontal)
 
-            .sheet(isPresented: $showSignUpView) {
-                SignUpView(email: emailAddress, showingProfile: $showingProfile)
-                    .environmentObject(userSession)
-            }
-            .sheet(isPresented: $showSignInView) {
-                SignInView(email: emailAddress, showingProfile: $showingProfile)
-                    .environmentObject(userSession)
-            }
+                   .sheet(isPresented: $showSignUpView) {
+                       SignUpView(email: emailAddress, showingProfile: $showingProfile)
+                           .environmentObject(userSession)
+                   }
+                   .sheet(isPresented: $showSignInView) {
+                       SignInView(email: emailAddress, showingProfile: $showingProfile)
+                           .environmentObject(userSession)
+                   }
 
-            List {
-                SettingRow(icon: "questionmark.circle", title: "Help Center")
-                SettingRow(icon: "gearshape", title: "Settings")
-            }
+                   List {
+                       NavigationLink(destination: HelpCenterView()) {
+                           SettingRow(icon: "questionmark.circle", title: "Help Center")
+                       }
+                       NavigationLink(destination: SettingsView()) {
+                           SettingRow(icon: "gearshape", title: "Settings")
+                       }
+                   }
 
-            Spacer() // Pushes everything to the top
-        }
-    }
+                   Spacer() // Pushes everything to the top
+               }
+           }
+       }
 
     private func checkUserAccount(email: String, completion: @escaping (Bool) -> Void) {
         let db = Firestore.firestore()
@@ -139,7 +145,6 @@ struct SettingRow: View {
                 Text(detail)
                     .foregroundColor(.gray)
             }
-            Image(systemName: "chevron.right")
         }
         .padding()
     }

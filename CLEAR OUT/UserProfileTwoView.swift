@@ -75,7 +75,8 @@ struct UserProfileTwoView: View {
                         SettingRowTwo(icon: "list.bullet.rectangle.portrait", title: "Transaction History")
                     }
                     
-                    SettingRowTwo(icon: "questionmark.circle", title: "Help Center")
+                    NavigationLink(destination: HelpCenterView()) {SettingRowTwo(icon: "questionmark.circle", title: "Help Center")
+                    }
                     
                     NavigationLink(destination: SettingsView()) {
                         SettingRowTwo(icon: "gearshape", title: "Settings")

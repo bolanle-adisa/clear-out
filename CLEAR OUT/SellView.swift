@@ -13,13 +13,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 struct SellView: View {
-    @State private var itemForSaleAndRent: [ItemForSaleAndRent] = [] {
-            didSet {
-                // Refresh the view when itemForSaleAndRent changes
-                print("ItemForSaleAndRent updated, refreshing view")
-                fetchItemsForSale()
-            }
-        }
+    @State private var itemForSaleAndRent: [ItemForSaleAndRent] = []
     @State private var showingAddItemView = false
     @State private var selectedItem: ItemForSaleAndRent?
     @EnvironmentObject var userSession: UserSession
@@ -101,7 +95,7 @@ struct SellView: View {
             
             .sheet(isPresented: $showingItemDetailsView) {
                 if let selectedItem = selectedItem {
-                    ItemDetailsView(item: selectedItem)
+                    ItemDetailsView(item: selectedItem, itemForSaleAndRent: $itemForSaleAndRent)
                 }
             }
             .onAppear {
@@ -156,7 +150,7 @@ struct SellView: View {
     private func itemDetailsViewSheet() -> some View {
         Group {
             if let selectedItem = selectedItem {
-                ItemDetailsView(item: selectedItem)
+                ItemDetailsView(item: selectedItem, itemForSaleAndRent: $itemForSaleAndRent)
             }
         }
     }
