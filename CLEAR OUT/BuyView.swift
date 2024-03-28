@@ -143,11 +143,11 @@ struct BuyView: View {
                             .fontWeight(.semibold)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 16)
-                            .background(self.selectedOption == option ? LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing) : LinearGradient(gradient: Gradient(colors: [Color.white]), startPoint: .leading, endPoint: .trailing))
+                            .background(self.selectedOption == option ? LinearGradient(gradient: Gradient(colors: [Color.black, Color.black]), startPoint: .leading, endPoint: .trailing) : LinearGradient(gradient: Gradient(colors: [Color.white]), startPoint: .leading, endPoint: .trailing))
                             .foregroundColor(self.selectedOption == option ? .white : .black)
                             .cornerRadius(20)
                             .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: self.selectedOption == option ? 0 : 1))
-                            .shadow(color: self.selectedOption == option ? Color.blue.opacity(0.5) : Color.clear, radius: 10, x: 0, y: 5)
+                            .shadow(color: self.selectedOption == option ? Color.black.opacity(0.5) : Color.clear, radius: 10, x: 0, y: 5)
                     }
                 }
             }

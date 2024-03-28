@@ -89,6 +89,7 @@
 		61648BA32B9685D800A5B7AA /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA22B9685D800A5B7AA /* FirebaseRemoteConfigSwift */; };
 		61648BA52B9685D800A5B7AA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA42B9685D800A5B7AA /* FirebaseStorage */; };
 		61648BA72B9685D800A5B7AA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA62B9685D800A5B7AA /* FirebaseStorageCombine-Community */; };
+		618DFFE32BB564FC00AFD722 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 618DFFE22BB564FC00AFD722 /* Launch Screen.storyboard */; };
 		619D0C242B97D2F100520A18 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619D0C232B97D2F100520A18 /* APIKeys.swift */; };
 		61FEE6DA2BB2CF1E0036A93D /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */; };
 		61FEE6DC2BB2D4330036A93D /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */; };
@@ -169,6 +170,7 @@
 		61648B6B2B96828000A5B7AA /* WishlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistManager.swift; sourceTree = "<group>"; };
 		61648B6D2B96829C00A5B7AA /* ItemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCard.swift; sourceTree = "<group>"; };
 		61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		618DFFE22BB564FC00AFD722 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		619D0C232B97D2F100520A18 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
 		61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */,
 				61FEE6EB2BB4ABDD0036A93D /* HelpCenterView.swift */,
 				61FEE6E92BB4375D0036A93D /* SettingsView.swift */,
+				618DFFE22BB564FC00AFD722 /* Launch Screen.storyboard */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
 				61648B072B967AB300A5B7AA /* Preview Content */,
@@ -493,6 +496,7 @@
 			files = (
 				61648B092B967AB300A5B7AA /* Preview Assets.xcassets in Resources */,
 				61648B062B967AB300A5B7AA /* Assets.xcassets in Resources */,
+				618DFFE32BB564FC00AFD722 /* Launch Screen.storyboard in Resources */,
 				61648B702B96857F00A5B7AA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -735,6 +739,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CLEAR-OUT-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = ClearOut;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera to take photos.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app needs your location to provide real-time alerts and suggestions for donation centers, even when the app is not in use.";
@@ -744,6 +749,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -771,6 +777,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CLEAR-OUT-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = ClearOut;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera to take photos.";
 				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app needs your location to provide real-time alerts and suggestions for donation centers, even when the app is not in use.";
@@ -780,6 +787,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
