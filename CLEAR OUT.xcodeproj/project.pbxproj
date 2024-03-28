@@ -97,6 +97,8 @@
 		61FEE6E62BB348E60036A93D /* PaymentMethodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6E52BB348E50036A93D /* PaymentMethodsView.swift */; };
 		61FEE6E82BB3D2350036A93D /* TransactionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */; };
 		61FEE6EA2BB4375E0036A93D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6E92BB4375D0036A93D /* SettingsView.swift */; };
+		61FEE6EC2BB4ABDE0036A93D /* HelpCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6EB2BB4ABDD0036A93D /* HelpCenterView.swift */; };
+		61FEE6EE2BB4AF9E0036A93D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6ED2BB4AF9D0036A93D /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +178,8 @@
 		61FEE6E52BB348E50036A93D /* PaymentMethodsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsView.swift; sourceTree = "<group>"; };
 		61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryView.swift; sourceTree = "<group>"; };
 		61FEE6E92BB4375D0036A93D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		61FEE6EB2BB4ABDD0036A93D /* HelpCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCenterView.swift; sourceTree = "<group>"; };
+		61FEE6ED2BB4AF9D0036A93D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,7 +314,9 @@
 				61FEE6DF2BB2F93B0036A93D /* AddressesView.swift */,
 				61FEE6E52BB348E50036A93D /* PaymentMethodsView.swift */,
 				61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */,
+				61FEE6EB2BB4ABDD0036A93D /* HelpCenterView.swift */,
 				61FEE6E92BB4375D0036A93D /* SettingsView.swift */,
+				61FEE6ED2BB4AF9D0036A93D /* Constants.swift */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
 				61648B072B967AB300A5B7AA /* Preview Content */,
@@ -537,6 +543,7 @@
 				61648B662B96822B00A5B7AA /* ItemsForSaleManager.swift in Sources */,
 				61648B042B967AB100A5B7AA /* ContentView.swift in Sources */,
 				61648B302B967BA200A5B7AA /* SellView.swift in Sources */,
+				61FEE6EC2BB4ABDE0036A93D /* HelpCenterView.swift in Sources */,
 				61648B6C2B96828000A5B7AA /* WishlistManager.swift in Sources */,
 				61648B2C2B967B6200A5B7AA /* BuyView.swift in Sources */,
 				614C56042B968C3800552E82 /* GooglePlacesAPIResponseModels.swift in Sources */,
@@ -549,6 +556,7 @@
 				61648B422B967E0300A5B7AA /* CollegeDataFetcher.swift in Sources */,
 				610F821F2BAA23E700381FF0 /* CheckoutView.swift in Sources */,
 				61648B682B96824600A5B7AA /* ItemCustomerView.swift in Sources */,
+				61FEE6EE2BB4AF9E0036A93D /* Constants.swift in Sources */,
 				61648B522B967F1900A5B7AA /* ImageViewer.swift in Sources */,
 				61648B3A2B967D4300A5B7AA /* UserSession.swift in Sources */,
 				619D0C242B97D2F100520A18 /* APIKeys.swift in Sources */,
