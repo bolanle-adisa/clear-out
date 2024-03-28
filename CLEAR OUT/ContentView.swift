@@ -68,6 +68,7 @@ struct ContentView: View {
             }
             .tag(4)
         }
+        .accentColor(.black)
         .onReceive(userSession.$isAuthenticated) { isAuthenticated in
             if isAuthenticated {
                 selectedTab = 4
