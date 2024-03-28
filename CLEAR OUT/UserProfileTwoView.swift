@@ -61,7 +61,9 @@ struct UserProfileTwoView: View {
                 .padding(.leading, 30)
                 
                 List {
-                    SettingRowTwo(icon: "message", title: "Messages")
+                    NavigationLink(destination: MessagesView()) {
+                        SettingRowTwo(icon: "message", title: "Messages")
+                    }
                     NavigationLink(destination: NotificationsView(notifications: $notifications, markNotificationsAsRead: markNotificationsAsRead)) {
                         SettingRowTwo(icon: "bell", title: "Notifications", notificationCount: unreadNotificationCount)
                     }

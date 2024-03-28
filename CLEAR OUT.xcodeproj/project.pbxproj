@@ -90,6 +90,8 @@
 		61648BA52B9685D800A5B7AA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA42B9685D800A5B7AA /* FirebaseStorage */; };
 		61648BA72B9685D800A5B7AA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 61648BA62B9685D800A5B7AA /* FirebaseStorageCombine-Community */; };
 		618DFFE32BB564FC00AFD722 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 618DFFE22BB564FC00AFD722 /* Launch Screen.storyboard */; };
+		618DFFE52BB5724D00AFD722 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618DFFE42BB5724D00AFD722 /* MessagesView.swift */; };
+		618DFFE72BB5817500AFD722 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618DFFE62BB5817500AFD722 /* ChatView.swift */; };
 		619D0C242B97D2F100520A18 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619D0C232B97D2F100520A18 /* APIKeys.swift */; };
 		61FEE6DA2BB2CF1E0036A93D /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */; };
 		61FEE6DC2BB2D4330036A93D /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */; };
@@ -171,6 +173,8 @@
 		61648B6D2B96829C00A5B7AA /* ItemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCard.swift; sourceTree = "<group>"; };
 		61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		618DFFE22BB564FC00AFD722 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		618DFFE42BB5724D00AFD722 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
+		618DFFE62BB5817500AFD722 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		619D0C232B97D2F100520A18 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		61FEE6D92BB2CF1D0036A93D /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
 		61FEE6DB2BB2D4330036A93D /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
@@ -316,6 +320,8 @@
 				61FEE6E72BB3D2340036A93D /* TransactionHistoryView.swift */,
 				61FEE6EB2BB4ABDD0036A93D /* HelpCenterView.swift */,
 				61FEE6E92BB4375D0036A93D /* SettingsView.swift */,
+				618DFFE42BB5724D00AFD722 /* MessagesView.swift */,
+				618DFFE62BB5817500AFD722 /* ChatView.swift */,
 				618DFFE22BB564FC00AFD722 /* Launch Screen.storyboard */,
 				61648B6F2B96857E00A5B7AA /* GoogleService-Info.plist */,
 				61648B052B967AB300A5B7AA /* Assets.xcassets */,
@@ -524,6 +530,7 @@
 			files = (
 				610F82272BB0E27500381FF0 /* AddressValidationService.swift in Sources */,
 				61FEE6E02BB2F93B0036A93D /* AddressesView.swift in Sources */,
+				618DFFE52BB5724D00AFD722 /* MessagesView.swift in Sources */,
 				61648B642B96820C00A5B7AA /* ItemRow.swift in Sources */,
 				61648B5C2B96817000A5B7AA /* ItemDetailsView.swift in Sources */,
 				61FEE6DC2BB2D4330036A93D /* NotificationsView.swift in Sources */,
@@ -553,6 +560,7 @@
 				61648B022B967AB100A5B7AA /* CLEAR_OUTApp.swift in Sources */,
 				610F82132BA94D0900381FF0 /* PaymentGateway.swift in Sources */,
 				61648B3C2B967D5B00A5B7AA /* SignUpView.swift in Sources */,
+				618DFFE72BB5817500AFD722 /* ChatView.swift in Sources */,
 				61648B6E2B96829C00A5B7AA /* ItemCard.swift in Sources */,
 				61648B422B967E0300A5B7AA /* CollegeDataFetcher.swift in Sources */,
 				610F821F2BAA23E700381FF0 /* CheckoutView.swift in Sources */,
